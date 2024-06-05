@@ -18,9 +18,7 @@ const providers: Array<any> = [
 ];
 
 const app = providers.reduce(
-    (Base, Current) => (
-        <Current.component {...Current.props}>{Base}</Current.component>
-    ),
+    (Base, Current) => <Current.component {...Current.props}>{Base}</Current.component>,
     <App />,
 );
 
