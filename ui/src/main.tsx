@@ -11,15 +11,10 @@ import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const providers: Array<any> = [
-    { component: ThemeProvider, props: { theme } },
-    { component: Provider, props: { store } },
-];
-
-const app = providers.reduce(
-    (Base, Current) => <Current.component {...Current.props}>{Base}</Current.component>,
-    <App />,
+ReactDOM.createRoot(document.getElementById('root')!).render(
+    <Provider store={store}>
+        <ThemeProvider theme={theme}>
+            <App />
+        </ThemeProvider>
+    </Provider>,
 );
-
-ReactDOM.createRoot(document.getElementById('root')!).render(app);

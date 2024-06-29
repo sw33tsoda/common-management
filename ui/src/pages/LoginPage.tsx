@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, SyntheticEvent } from 'react';
 import { Login, QrCode } from '@mui/icons-material';
 import { Box, Button, Container, Paper, Tab, Tabs, TextField } from '@mui/material';
 import { useForm, Controller } from 'react-hook-form';
@@ -7,6 +7,11 @@ enum LoginTypeTab {
     Form = 0,
     QR = 1,
 }
+
+const LoginTypeLabel = {
+    [LoginTypeTab.Form]: 'Form',
+    [LoginTypeTab.QR]: 'QR',
+};
 
 interface ILoginFormInputs {
     email: string;
@@ -31,7 +36,9 @@ const LoginForm = () => {
         defaultValues: loginFormDefaultValues,
     });
 
-    const handleOnSubmit = () => {};
+    const handleOnSubmit = () => {
+        alert('Submitted..');
+    };
 
     return (
         <Box
@@ -46,16 +53,35 @@ const LoginForm = () => {
                 render={({ field }) => (
                     <TextField
                         {...field}
-                        label='Email'
+                        label={`Email ${
+                            errors.email?.message ? ' - ' + errors.email?.message : ''
+                        }`}
                         id='email'
                         size='small'
                         fullWidth
                         type='email'
+                        error={!!errors.email?.message}
                     />
                 )}
             />
-
-            <TextField label='Password' id='password' size='small' fullWidth type='password' />
+            <Controller
+                name='password'
+                control={control}
+                rules={{ required: 'This field is required' }}
+                render={({ field }) => (
+                    <TextField
+                        {...field}
+                        label={`Password ${
+                            errors.password?.message ? ' - ' + errors.password?.message : ''
+                        }`}
+                        id='password'
+                        size='small'
+                        fullWidth
+                        type='password'
+                        error={!!errors.password?.message}
+                    />
+                )}
+            />
             <Button variant='contained' type='submit'>
                 Access
             </Button>
@@ -64,23 +90,18 @@ const LoginForm = () => {
 };
 
 const LoginPage = () => {
-    const [selectedTab, setSelectedTab] = useState<LoginTypeTab>(LoginTypeTab.Form);
+    const [tab, setTab] = useState<LoginTypeTab>(LoginTypeTab.Form);
 
-    const handleSetSelectedTab = (_: React.SyntheticEvent, newValue: number) => {
-        setSelectedTab(newValue);
-    };
+    const handleSetTab = (_: SyntheticEvent, newValue: number) => setTab(newValue);
 
     return (
         <Container maxWidth='sm' sx={{ mt: 12 }}>
             <Paper elevation={6} sx={{ p: 1 }}>
-                {/* Tab switch */}
-                <Tabs centered value={selectedTab} onChange={handleSetSelectedTab}>
-                    <Tab icon={<Login />} label='Form' />
-                    <Tab icon={<QrCode />} label='QR' />
+                <Tabs centered value={tab} onChange={handleSetTab}>
+                    <Tab icon={<Login />} label={LoginTypeLabel[LoginTypeTab.Form]} />
+                    <Tab icon={<QrCode />} label={LoginTypeLabel[LoginTypeTab.QR]} />
                 </Tabs>
-
-                {/* Login type tabs */}
-                <Box mt={1}>{selectedTab === LoginTypeTab.Form ? <LoginForm /> : <LoginQR />}</Box>
+                <Box mt={1}>{tab === LoginTypeTab.Form ? <LoginForm /> : <LoginQR />}</Box>
             </Paper>
         </Container>
     );

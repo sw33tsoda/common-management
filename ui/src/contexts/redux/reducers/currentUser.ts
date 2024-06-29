@@ -10,7 +10,7 @@ const initialState: ICurrentUser = {
     name: '',
 };
 
-export const currenUserSlice = createSlice({
+export const currentUserSlice = createSlice({
     name: 'currentUser',
     initialState,
     reducers: {
@@ -24,10 +24,6 @@ export const currenUserSlice = createSlice({
 const {
     actions: { GLOBAL_SET_CURRENT_USER, GLOBAL_UNSET_CURRENT_USER },
     reducer: currentUserReducer,
-} = currenUserSlice;
+} = currentUserSlice;
 
-export {
-    GLOBAL_SET_CURRENT_USER,
-    GLOBAL_UNSET_CURRENT_USER,
-    currentUserReducer,
-};
+export { GLOBAL_SET_CURRENT_USER, GLOBAL_UNSET_CURRENT_USER, currentUserReducer };
