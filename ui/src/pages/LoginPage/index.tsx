@@ -2,26 +2,7 @@ import { useState, SyntheticEvent } from 'react';
 import { Login, QrCode } from '@mui/icons-material';
 import { Box, Button, Container, Paper, Tab, Tabs, TextField } from '@mui/material';
 import { useForm, Controller } from 'react-hook-form';
-
-enum LoginTypeTab {
-    Form = 0,
-    QR = 1,
-}
-
-const LoginTypeLabel = {
-    [LoginTypeTab.Form]: 'Form',
-    [LoginTypeTab.QR]: 'QR',
-};
-
-interface ILoginFormInputs {
-    email: string;
-    password: string;
-}
-
-const loginFormDefaultValues: ILoginFormInputs = {
-    email: '',
-    password: '',
-};
+import { ILoginFormInputs, LoginTypeLabel, LoginTypeTab, loginFormDefaultValues } from './misc';
 
 const LoginQR = () => {
     return <Box>In-development...</Box>;

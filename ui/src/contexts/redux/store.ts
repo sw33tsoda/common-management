@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { currentUserReducer } from './reducers';
+import { currentThemeSystemReducer } from './reducers/themeSystem';
 
 const store = configureStore({
     reducer: {
         currenUser: currentUserReducer,
+        themeSystem: currentThemeSystemReducer,
     },
 });
 

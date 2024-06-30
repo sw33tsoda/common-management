@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 export enum ThemeSystem {
-    LightMode = 0,
-    DarkMode = 1,
+    LightMode = 'light',
+    DarkMode = 'dark',
 }
 
 export interface IThemeSystem {
@@ -26,7 +26,7 @@ export const themeSystemSlice = createSlice({
 
 const {
     actions: { GLOBAL_THEME_SYSTEM_TOGGLE },
-    reducer: currentUserReducer,
+    reducer: currentThemeSystemReducer,
 } = themeSystemSlice;
 
-export { GLOBAL_THEME_SYSTEM_TOGGLE, currentUserReducer };
+export { GLOBAL_THEME_SYSTEM_TOGGLE, currentThemeSystemReducer };
