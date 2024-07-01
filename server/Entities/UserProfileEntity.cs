@@ -3,7 +3,7 @@ using Server.Models;
 
 namespace Server.Entities
 {
-    public class UserProfileEntity : RecordBasicInformation
+    public class UserProfileEntity : RecordBasicDate
     {
         [Key]
         public Guid Id { get; set; }

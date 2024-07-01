@@ -4,7 +4,7 @@ using Server.Models;
 
 namespace Server.Entities
 {
-    public class UserAccountEntity : RecordBasicInformation
+    public class UserAccountEntity : RecordBasicDate
     {
         [Key]
         public Guid Id { get; set; }
@@ -23,6 +23,6 @@ namespace Server.Entities
         public Guid? UserProfileId { get; set; }
 
         [ForeignKey("UserProfileId")]
-        public virtual UserProfileEntity? UserProfile { get; }
+        public virtual UserProfileEntity? UserProfiles { get; }
     }
 }

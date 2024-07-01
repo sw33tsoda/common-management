@@ -1,6 +1,6 @@
 namespace Server.Models
 {
-    public class RecordBasicInformation
+    public class RecordBasicDate
     {
         DateTime CreatedAt { set; get; }
         Guid CreatedBy { set; get; }
