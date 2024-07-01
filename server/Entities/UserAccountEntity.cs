@@ -7,7 +7,7 @@ namespace Server.Entities
     public class UserAccountEntity : RecordBasicDate
     {
         [Key]
-        public Guid Id { get; set; }
+        public required Guid Id { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = nameof(Email) + " is required")]
         [EmailAddress(ErrorMessage = "wrong email format")]
@@ -19,10 +19,6 @@ namespace Server.Entities
         [MinLength(1, ErrorMessage = "minimum 1 character")]
         [MaxLength(128, ErrorMessage = "maximum 128 characters")]
         public required string Password { get; set; }
-
-        public Guid? UserProfileId { get; set; }
-
-        [ForeignKey("UserProfileId")]
-        public virtual List<UserProfileEntity>? UserProfiles { get; }
+        public required virtual List<UserProfileEntity> UserProfiles { get; set; }
     }
 }

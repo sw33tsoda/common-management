@@ -12,5 +12,12 @@ namespace Server.Contexts
 
         public DbSet<UserAccountEntity> UserAccounts { get; set; }
         public DbSet<UserProfileEntity> UserProfiles { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<UserAccountEntity>().HasMany(entity => entity.UserProfiles).WithOne(entity => entity.UserAccount).HasForeignKey(entity => entity.UserAccountId);
+
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }
