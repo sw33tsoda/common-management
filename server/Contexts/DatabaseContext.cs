@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Server.Entities;
 
 namespace Server.Contexts
 {
@@ -8,5 +9,8 @@ namespace Server.Contexts
         {
             ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
         }
+
+        public DbSet<UserAccountEntity> UserAccounts { get; set; }
+        public DbSet<UserProfileEntity> UserProfiles { get; set; }
     }
 }

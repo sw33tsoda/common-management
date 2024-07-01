@@ -23,6 +23,6 @@ namespace Server.Entities
         public Guid? UserProfileId { get; set; }
 
         [ForeignKey("UserProfileId")]
-        public virtual UserProfileEntity? UserProfiles { get; }
+        public virtual List<UserProfileEntity>? UserProfiles { get; }
     }
 }

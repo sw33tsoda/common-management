@@ -1,11 +1,57 @@
+using System.Text;
+using Asp.Versioning;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Server.Contexts;
+using Server.Interfaces;
+using Server.Models;
+using Server.Services;
 
 var builder = WebApplication.CreateBuilder(args);
-IConfiguration configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
+var configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
 
 // Attempt to connect database
 builder.Services.AddDbContext<DatabaseContext>(option => option.UseNpgsql(configuration.GetConnectionString("Dev")));
+
+// Authentication
+var jwtOptionsSection = configuration.GetRequiredSection("Jwt");
+builder.Services.Configure<JwtOptions>(jwtOptionsSection);
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(jwtOptions =>
+{
+    var configKey = jwtOptionsSection["Key"] ?? "";
+    var key = Encoding.UTF8.GetBytes(configKey);
+
+    jwtOptions.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidIssuer = jwtOptionsSection["Issuer"],
+        ValidAudience = jwtOptionsSection["Audience"],
+        IssuerSigningKey = new SymmetricSecurityKey(key),
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = false,
+        ValidateIssuerSigningKey = true
+    };
+});
+builder.Services.AddAuthorization();
+builder.Services.AddApiVersioning(options =>
+{
+    options.DefaultApiVersion = new ApiVersion(1, 0);
+    options.ReportApiVersions = true;
+    options.AssumeDefaultVersionWhenUnspecified = true;
+    options.ApiVersionReader = new UrlSegmentApiVersionReader();
+});
+
+
+// Other services
+builder.Services.AddTransient<IJwtService, JwtService>();
+builder.Services.AddTransient<IUserAuthenticationService, UserAuthenticationService>();
+builder.Services.AddScoped<IRepositoryService, RepositoryService>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -19,6 +65,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseAuthentication();
+app.UseAuthorization();
 app.UseHttpsRedirection();
 
 app.Run();
