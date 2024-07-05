@@ -2,6 +2,7 @@ using Asp.Versioning;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Server.Interfaces;
+using Server.Models;
 
 namespace Server.Controllers
 {
@@ -25,7 +26,8 @@ namespace Server.Controllers
         [HttpPost("generatetoken")]
         public IActionResult GenerateToken()
         {
-            return Ok("Nice");
+            var token = _jwtService.GenerateToken(new UserAccountDto() { Email = "huysemla@gmail.com", Password = "badnews", Id = Guid.NewGuid() });
+            return Ok(token);
         }
     }
 }
