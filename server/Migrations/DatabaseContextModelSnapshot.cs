@@ -52,7 +52,7 @@ namespace server.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("UserAccounts");
+                    b.ToTable("UserAccount", (string)null);
                 });
 
             modelBuilder.Entity("Server.Entities.UserProfileEntity", b =>

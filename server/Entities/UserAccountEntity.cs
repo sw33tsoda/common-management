@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Server.Models;
 
 namespace Server.Entities
@@ -20,5 +21,14 @@ namespace Server.Entities
         [MaxLength(128, ErrorMessage = "maximum 128 characters")]
         public required string Password { get; set; }
         public required virtual List<UserProfileEntity> UserProfiles { get; set; }
+    }
+
+    public class UserAccountEntityConfiguration : IEntityTypeConfiguration<UserAccountEntity>
+    {
+        public void Configure(EntityTypeBuilder<UserAccountEntity> builder)
+        {
+            builder.ToTable("UserAccount");
+            builder.HasMany(entity => entity.UserProfiles).WithOne(entity => entity.UserAccount).HasForeignKey(entity => entity.UserAccountId);
+        }
     }
 }

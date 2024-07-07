@@ -12,8 +12,8 @@ using Server.Contexts;
 namespace server.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20240701165752_InitUserAccountProfile")]
-    partial class InitUserAccountProfile
+    [Migration("20240707152305_InitDatabase")]
+    partial class InitDatabase
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -55,7 +55,7 @@ namespace server.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("UserAccounts");
+                    b.ToTable("UserAccount", (string)null);
                 });
 
             modelBuilder.Entity("Server.Entities.UserProfileEntity", b =>

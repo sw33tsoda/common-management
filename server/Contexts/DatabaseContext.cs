@@ -15,7 +15,7 @@ namespace Server.Contexts
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<UserAccountEntity>().HasMany(entity => entity.UserProfiles).WithOne(entity => entity.UserAccount).HasForeignKey(entity => entity.UserAccountId);
+            modelBuilder.ApplyConfiguration(new UserAccountEntityConfiguration());
             base.OnModelCreating(modelBuilder);
         }
     }
