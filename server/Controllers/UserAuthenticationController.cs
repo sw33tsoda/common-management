@@ -7,7 +7,7 @@ using Server.Models;
 namespace Server.Controllers
 {
     [ApiVersion("1.0")]
-    [Route("api")] // Bad prac tice 
+    [Route("api/auth")]
     [ApiController]
     public class UserAuthenticationController : ControllerBase
     {
