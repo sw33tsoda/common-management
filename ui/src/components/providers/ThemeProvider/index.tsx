@@ -1,19 +1,10 @@
-import { createTheme } from '@mui/material';
 import { RootState } from '../../../contexts';
 import { useSelector } from 'react-redux';
-import { ThemeProvider as Provider } from '@mui/material';
-import { ThemeProviderProps } from '@emotion/react';
 
-const ThemeProvider = (props: Omit<ThemeProviderProps, 'theme'>) => {
+const ThemeProvider = (props) => {
     const themeState = useSelector((state: RootState) => state.themeSystem);
 
-    const theme = createTheme({
-        palette: {
-            mode: themeState.mode,
-        },
-    });
-
-    return <Provider {...props} theme={theme} />;
+    return props.children;
 };
 
 export { ThemeProvider };
