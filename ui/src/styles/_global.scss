@@ -1,0 +1,5 @@
+@use "functions" as fn;
+
+* {
+    font-family: fn.get-font(global);
+}
