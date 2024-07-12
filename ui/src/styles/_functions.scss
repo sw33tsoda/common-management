@@ -1,0 +1,5 @@
+@use "variables" as var;
+
+@function get-font($key) {
+    @return map-get(var.$font, $key);
+}
