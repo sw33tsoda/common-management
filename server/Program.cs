@@ -60,6 +60,7 @@ builder.Services.AddApiVersioning(options =>
 builder.Services.AddTransient<IJwtService, JwtService>();
 builder.Services.AddTransient<IUserAuthenticationService, UserAuthenticationService>();
 builder.Services.AddScoped<IRepositoryService, RepositoryService>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
