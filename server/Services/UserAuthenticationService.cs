@@ -1,47 +1,24 @@
 using Microsoft.IdentityModel.Tokens;
-using Server.Entities;
 using Server.Interfaces;
+using Server.Extensions;
 using Server.Models;
 
 namespace Server.Services
 {
     public class UserAuthenticationService : IUserAuthenticationService
     {
-        private readonly IRepositoryService _repository;
+        private readonly IUserService _userService;
+        private readonly IJwtService _jwtService;
+        private readonly ILogger<UserAuthenticationService> _logger;
 
-        public UserAuthenticationService(IRepositoryService repository)
+        public UserAuthenticationService(IUserService userService, IJwtService jwtService, ILogger<UserAuthenticationService> logger)
         {
-            _repository = repository;
+            _userService = userService;
+            _jwtService = jwtService;
+            _logger = logger;
         }
 
-        public UserAccountDto? GetUserAccount(Guid? userId)
-        {
-            if (userId != null || userId == Guid.Empty)
-            {
-                throw new ArgumentNullException(nameof(userId), "cannot be null or empty");
-            }
-
-            var entity = _repository.Find<UserAccountEntity>(entity => entity.Id == userId);
-
-            return ConvertUserAccountEntityToDto(entity);
-        }
-
-        private static UserAccountDto? ConvertUserAccountEntityToDto(UserAccountEntity? entity)
-        {
-            if (entity == null)
-            {
-                return null;
-            }
-
-            return new UserAccountDto
-            {
-                Id = entity.Id,
-                Email = entity.Email,
-                Password = entity.Password
-            };
-        }
-
-        public bool IsAuthenticated(string? givenPassword, string? storedPassword)
+        public bool CheckPasswordMatch(string? givenPassword, string? storedPassword)
         {
             if (givenPassword.IsNullOrEmpty())
             {
@@ -53,6 +30,28 @@ namespace Server.Services
             }
 
             return BCrypt.Net.BCrypt.Verify(givenPassword, storedPassword);
+        }
+
+        public bool CheckAuthenticationLegit(UserAccountDto userAccountDto)
+        {
+            var user = _userService.GetUserAccountByEmail(userAccountDto.Email);
+
+            if (user == null)
+            {
+                throw new Exception("User does not exist");
+            }
+
+            return CheckPasswordMatch(userAccountDto.Password, user.Password);
+        }
+
+        public string? Authenticate(UserAccountDto userAccountDto)
+        {
+            if (!CheckAuthenticationLegit(userAccountDto))
+            {
+                return null;
+            }
+
+            return _jwtService.GenerateToken(userAccountDto);
         }
     }
 }

@@ -8,12 +8,18 @@ namespace Server.Extensions
             {
                 return true;
             }
+
             return false;
         }
 
         public static bool IsGuidValid(this string id)
         {
-            return Guid.TryParse(id, out _);
+            if (Guid.TryParse(id, out _))
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }
