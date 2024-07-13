@@ -4,7 +4,8 @@ namespace Server.Interfaces
 {
     public interface IUserAuthenticationService
     {
-        public UserAccountDto? GetUserAccount(Guid? userId);
-        public bool IsAuthenticated(string? givenPassword, string? storedPassword);
+        public bool CheckPasswordMatch(string givenPassword, string? storedPassword);
+        public bool CheckAuthenticationLegit(UserAccountDto userAccountDto);
+        public string? Authenticate(UserAccountDto userAccountDto);
     }
 }

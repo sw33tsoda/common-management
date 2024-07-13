@@ -11,22 +11,18 @@ namespace Server.Controllers
     [ApiController]
     public class UserAuthenticationController : ControllerBase
     {
-        private readonly ILogger<UserAuthenticationController> _logger;
         private readonly IUserAuthenticationService _userAuthenticationService;
-        private readonly IJwtService _jwtService;
 
-        public UserAuthenticationController(ILogger<UserAuthenticationController> logger, IUserAuthenticationService userAuthenticationService, IJwtService jwtService)
+        public UserAuthenticationController(IUserAuthenticationService userAuthenticationService)
         {
             _userAuthenticationService = userAuthenticationService;
-            _jwtService = jwtService;
-            _logger = logger;
         }
 
         [AllowAnonymous]
-        [HttpPost("generatetoken")]
-        public IActionResult GenerateToken()
+        [HttpPost("login")]
+        public IActionResult Login(UserAccountDto userAccountDto)
         {
-            var token = _jwtService.GenerateToken(new UserAccountDto() { Email = "huysemla@gmail.com", Password = "badnews", Id = Guid.NewGuid() });
+            var token = _userAuthenticationService.Authenticate(userAccountDto);
             return Ok(token);
         }
     }
