@@ -5,8 +5,10 @@ namespace Server.Interfaces
 {
     public interface IUserService
     {
-        public UserAccountDto? GetUserAccountByUserId(Guid? givenUserId);
-        public UserAccountDto? GetUserAccountByEmail(string givenEmail);
-        public UserAccountDto ConvertUserAccountEntityToDto(UserAccountEntity entity);
+        Task<UserAccountDto?> GetUserAccountByUserId(Guid? givenUserId);
+        Task<UserAccountDto?> GetUserAccountByEmail(string givenEmail);
+        UserAccountDto ConvertUserAccountEntityToDto(UserAccountEntity entity);
+        UserAccountEntity ConvertUserAccountDtoToEntity(UserAccountDto dto);
+        Task CreateUserAccount(UserAccountDto userAccountDto);
     }
 }

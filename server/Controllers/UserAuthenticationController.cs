@@ -25,5 +25,13 @@ namespace Server.Controllers
             var token = _userAuthenticationService.Authenticate(userAccountDto);
             return Ok(token);
         }
+
+        [AllowAnonymous]
+        [HttpPost("register")]
+        public async Task<IActionResult> Register(UserAccountDto userAccountDto)
+        {
+            await _userAuthenticationService.Register(userAccountDto);
+            return Ok("");
+        }
     }
 }
