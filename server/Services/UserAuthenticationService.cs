@@ -32,9 +32,9 @@ namespace Server.Services
             return BCrypt.Net.BCrypt.Verify(givenPassword, storedPassword);
         }
 
-        public bool CheckAuthenticationLegit(UserAccountDto userAccountDto)
+        public async Task<bool> CheckAuthenticationLegit(UserAccountDto userAccountDto)
         {
-            var user = _userService.GetUserAccountByEmail(userAccountDto.Email);
+            var user = await _userService.GetUserAccountByEmail(userAccountDto.Email);
 
             if (user == null)
             {
@@ -44,14 +44,19 @@ namespace Server.Services
             return CheckPasswordMatch(userAccountDto.Password, user.Password);
         }
 
-        public string? Authenticate(UserAccountDto userAccountDto)
+        public async Task<string?> Authenticate(UserAccountDto userAccountDto)
         {
-            if (!CheckAuthenticationLegit(userAccountDto))
+            if (!await CheckAuthenticationLegit(userAccountDto))
             {
                 return null;
             }
 
             return _jwtService.GenerateToken(userAccountDto);
+        }
+
+        public async Task Register(UserAccountDto userAccountDto)
+        {
+            await _userService.CreateUserAccount(userAccountDto);
         }
     }
 }

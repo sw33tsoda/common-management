@@ -8,19 +8,19 @@ namespace Server.Entities
     public class UserAccountEntity : RecordBasicDate
     {
         [Key]
-        public required Guid Id { get; set; }
+        public Guid Id { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = nameof(Email) + " is required")]
         [EmailAddress(ErrorMessage = "wrong email format")]
         [MinLength(1, ErrorMessage = "minimum 1 character")]
         [MaxLength(320, ErrorMessage = "maximum 320 characters")]
-        public required string Email { get; set; }
+        public string Email { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = nameof(Password) + " is required")]
         [MinLength(1, ErrorMessage = "minimum 1 character")]
         [MaxLength(128, ErrorMessage = "maximum 128 characters")]
-        public required string Password { get; set; }
-        public required virtual List<UserProfileEntity> UserProfiles { get; set; }
+        public string Password { get; set; }
+        public virtual List<UserProfileEntity> UserProfiles { get; set; }
     }
 
     public class UserAccountEntityConfiguration : IEntityTypeConfiguration<UserAccountEntity>
@@ -28,6 +28,7 @@ namespace Server.Entities
         public void Configure(EntityTypeBuilder<UserAccountEntity> builder)
         {
             builder.ToTable("UserAccount");
+            builder.HasIndex(entity => entity.Email).IsUnique();
             builder.HasMany(entity => entity.UserProfiles).WithOne(entity => entity.UserAccount).HasForeignKey(entity => entity.UserAccountId);
         }
     }

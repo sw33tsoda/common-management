@@ -15,14 +15,14 @@ namespace Server.Services
             _repository = repository;
         }
 
-        public UserAccountDto? GetUserAccountByUserId(Guid? givenUserId)
+        public async Task<UserAccountDto?> GetUserAccountByUserId(Guid? givenUserId)
         {
             if (givenUserId.IsNullOrEmpty())
             {
                 throw new ArgumentNullException(nameof(givenUserId), "cannot be null or empty");
             }
 
-            var entity = _repository.Find<UserAccountEntity>(entity => entity.Id == givenUserId);
+            var entity = await _repository.FindAsync<UserAccountEntity>(entity => entity.Id == givenUserId);
 
             if (entity == null)
             {
@@ -32,14 +32,14 @@ namespace Server.Services
             return ConvertUserAccountEntityToDto(entity);
         }
 
-        public UserAccountDto? GetUserAccountByEmail(string givenEmail)
+        public async Task<UserAccountDto?> GetUserAccountByEmail(string givenEmail)
         {
             if (givenEmail.IsNullOrEmpty())
             {
                 throw new ArgumentNullException(nameof(givenEmail), "cannot be null or empty");
             }
 
-            var entity = _repository.Find<UserAccountEntity>(entity => entity.Email == givenEmail);
+            var entity = await _repository.FindAsync<UserAccountEntity>(entity => entity.Email == givenEmail);
 
             if (entity == null)
             {
@@ -55,5 +55,17 @@ namespace Server.Services
             Email = entity.Email,
             Password = entity.Password
         };
+
+        public UserAccountEntity ConvertUserAccountDtoToEntity(UserAccountDto dto) => new()
+        {
+            Email = dto.Email,
+            Password = BCrypt.Net.BCrypt.HashPassword(dto.Password),
+        };
+
+        public async Task CreateUserAccount(UserAccountDto userAccountDto)
+        {
+            var entity = ConvertUserAccountDtoToEntity(userAccountDto);
+            await _repository.AddAsync(entity);
+        }
     }
 }

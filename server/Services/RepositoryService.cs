@@ -16,22 +16,22 @@ namespace Server.Services
             _logger = logger;
         }
 
-        public IQueryable<TEntity> GetAll<TEntity>(Expression<Func<TEntity, TEntity>> expression) where TEntity : class
+        public async Task<List<TEntity>> GetAllAsync<TEntity>(Expression<Func<TEntity, TEntity>> expression) where TEntity : class
         {
-            return _databaseContext.Set<TEntity>().Select(expression);
+            return await _databaseContext.Set<TEntity>().Select(expression).ToListAsync();
         }
 
-        public IQueryable<TEntity> Get<TEntity>(Expression<Func<TEntity, bool>> expression) where TEntity : class
+        public async Task<List<TEntity>> GetAsync<TEntity>(Expression<Func<TEntity, bool>> expression) where TEntity : class
         {
-            return _databaseContext.Set<TEntity>().Where(expression);
+            return await _databaseContext.Set<TEntity>().Where(expression).ToListAsync();
         }
 
-        public TEntity? Find<TEntity>(Expression<Func<TEntity, bool>> expression) where TEntity : class
+        public async Task<TEntity?> FindAsync<TEntity>(Expression<Func<TEntity, bool>> expression) where TEntity : class
         {
-            return _databaseContext.Set<TEntity>().FirstOrDefault(expression);
+            return await _databaseContext.Set<TEntity>().FirstOrDefaultAsync(expression);
         }
 
-        public TEntity? Find<TEntity>(Expression<Func<TEntity, bool>> expression, List<Expression<Func<TEntity, object>>> includes) where TEntity : class
+        public async Task<TEntity?> FindAsync<TEntity>(Expression<Func<TEntity, bool>> expression, List<Expression<Func<TEntity, object>>> includes) where TEntity : class
         {
             var query = _databaseContext.Set<TEntity>();
 
@@ -43,17 +43,17 @@ namespace Server.Services
                 }
             }
 
-            var result = query.FirstOrDefault(expression);
+            var result = await query.FirstOrDefaultAsync(expression);
 
             return result;
         }
 
-        public TEntity? FindForUpdate<TEntity>(Expression<Func<TEntity, bool>> expression) where TEntity : class
+        public async Task<TEntity?> FindForUpdate<TEntity>(Expression<Func<TEntity, bool>> expression) where TEntity : class
         {
-            return _databaseContext.Set<TEntity>().AsTracking().FirstOrDefault(expression);
+            return await _databaseContext.Set<TEntity>().AsTracking().FirstOrDefaultAsync(expression);
         }
 
-        public TEntity? FindForUpdate<TEntity>(Expression<Func<TEntity, bool>> expression, List<Expression<Func<TEntity, object>>> includes) where TEntity : class
+        public async Task<TEntity?> FindForUpdateAsync<TEntity>(Expression<Func<TEntity, bool>> expression, List<Expression<Func<TEntity, object>>> includes) where TEntity : class
         {
             var query = _databaseContext.Set<TEntity>().AsTracking();
 
@@ -65,26 +65,32 @@ namespace Server.Services
                 }
             }
 
-            var result = query.FirstOrDefault(expression);
+            var result = await query.FirstOrDefaultAsync(expression);
 
             return result;
         }
 
-        public bool Update<TEntity>(TEntity entity, bool clearTracker = false) where TEntity : class
+        public async Task UpdateAsync<TEntity>(TEntity entity, bool clearTracker = false) where TEntity : class
         {
-            try
+            _databaseContext.Update<TEntity>(entity);
+            var entry = _databaseContext.Entry(entity);
+            if (entry.State == EntityState.Modified)
             {
-                _databaseContext.Update(entity);
-                if (clearTracker)
-                {
-                    _databaseContext.ChangeTracker.Clear();
-                }
-                return true;
+                await _databaseContext.SaveChangesAsync();
             }
-            catch (Exception exception)
+            if (clearTracker)
             {
-                _logger.LogError($"An exception while saving an entity ({nameof(TEntity)}): {exception.Message}");
-                return false;
+                _databaseContext.ChangeTracker.Clear();
+            }
+        }
+
+        public async Task AddAsync<TEntity>(TEntity entity) where TEntity : class
+        {
+            await _databaseContext.AddAsync<TEntity>(entity);
+            var entry = _databaseContext.Entry(entity);
+            if (entry.State == EntityState.Added)
+            {
+                await _databaseContext.SaveChangesAsync();
             }
         }
     }

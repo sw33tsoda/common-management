@@ -4,8 +4,9 @@ namespace Server.Interfaces
 {
     public interface IUserAuthenticationService
     {
-        public bool CheckPasswordMatch(string givenPassword, string? storedPassword);
-        public bool CheckAuthenticationLegit(UserAccountDto userAccountDto);
-        public string? Authenticate(UserAccountDto userAccountDto);
+        bool CheckPasswordMatch(string? givenPassword, string? storedPassword);
+        Task<bool> CheckAuthenticationLegit(UserAccountDto userAccountDto);
+        Task<string?> Authenticate(UserAccountDto userAccountDto);
+        Task Register(UserAccountDto userAccountDto);
     }
 }
