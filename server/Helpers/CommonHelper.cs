@@ -1,10 +1,10 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Server.Extensions
+namespace Server.Helpers
 {
-    public static class DtoValidationExtensions
+    public static class CommonHelper
     {
-        public static bool DtoValidate(this object obj, out List<ValidationResult> results)
+        public static bool DtoValidate(object obj, out List<ValidationResult> results)
         {
             if (obj == null)
             {
