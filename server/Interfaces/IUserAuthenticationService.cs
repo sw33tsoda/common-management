@@ -1,4 +1,4 @@
-using Server.Models;
+using Server.Dtos;
 
 namespace Server.Interfaces
 {
@@ -7,6 +7,6 @@ namespace Server.Interfaces
         bool CheckPasswordMatch(string? givenPassword, string? storedPassword);
         Task<bool> CheckAuthenticationLegit(UserAccountDto userAccountDto);
         Task<string?> Authenticate(UserAccountDto userAccountDto);
-        Task Register(UserAccountDto userAccountDto);
+        Task<UserAccountDto> Register(UserAccountDto userAccountDto);
     }
 }
