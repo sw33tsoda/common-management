@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Server.Contexts;
 using Server.Interfaces;
-using Server.Models;
+using Server.Dtos;
 using Server.Services;
 
 var builder = WebApplication.CreateBuilder(args);

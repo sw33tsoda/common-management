@@ -16,6 +16,16 @@ namespace Server.Services
             _logger = logger;
         }
 
+        public IQueryable<TEntity> GetAll<TEntity>(Expression<Func<TEntity, TEntity>> expression) where TEntity : class
+        {
+            return _databaseContext.Set<TEntity>().Select(expression);
+        }
+
+        public IQueryable<TEntity> Get<TEntity>(Expression<Func<TEntity, bool>> expression) where TEntity : class
+        {
+            return _databaseContext.Set<TEntity>().Where(expression);
+        }
+
         public async Task<List<TEntity>> GetAllAsync<TEntity>(Expression<Func<TEntity, TEntity>> expression) where TEntity : class
         {
             return await _databaseContext.Set<TEntity>().Select(expression).ToListAsync();
@@ -70,28 +80,22 @@ namespace Server.Services
             return result;
         }
 
-        public async Task UpdateAsync<TEntity>(TEntity entity, bool clearTracker = false) where TEntity : class
+        public async Task<TEntity> UpdateAsync<TEntity>(TEntity entity, bool clearTracker = false) where TEntity : class
         {
             _databaseContext.Update<TEntity>(entity);
-            var entry = _databaseContext.Entry(entity);
-            if (entry.State == EntityState.Modified)
-            {
-                await _databaseContext.SaveChangesAsync();
-            }
             if (clearTracker)
             {
                 _databaseContext.ChangeTracker.Clear();
             }
+            await _databaseContext.SaveChangesAsync();
+            return entity;
         }
 
-        public async Task AddAsync<TEntity>(TEntity entity) where TEntity : class
+        public async Task<TEntity> AddAsync<TEntity>(TEntity entity) where TEntity : class
         {
             await _databaseContext.AddAsync<TEntity>(entity);
-            var entry = _databaseContext.Entry(entity);
-            if (entry.State == EntityState.Added)
-            {
-                await _databaseContext.SaveChangesAsync();
-            }
+            await _databaseContext.SaveChangesAsync();
+            return entity;
         }
     }
 }

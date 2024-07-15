@@ -1,4 +1,4 @@
-using Server.Models;
+using Server.Dtos;
 
 namespace Server.Interfaces
 {

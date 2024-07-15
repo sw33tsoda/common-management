@@ -1,8 +1,10 @@
 using Microsoft.IdentityModel.Tokens;
 using Server.Entities;
 using Server.Interfaces;
-using Server.Models;
+using Server.Dtos;
 using Server.Extensions;
+using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace Server.Services
 {
@@ -29,7 +31,12 @@ namespace Server.Services
                 return null;
             }
 
-            return ConvertUserAccountEntityToDto(entity);
+            return new UserAccountDto
+            {
+                Id = entity.Id,
+                Email = entity.Email,
+                Password = entity.Password
+            };
         }
 
         public async Task<UserAccountDto?> GetUserAccountByEmail(string givenEmail)
@@ -46,26 +53,26 @@ namespace Server.Services
                 return null;
             }
 
-            return ConvertUserAccountEntityToDto(entity);
+            return new UserAccountDto
+            {
+                Id = entity.Id,
+                Email = entity.Email,
+                Password = entity.Password
+            };
         }
 
-        public UserAccountDto ConvertUserAccountEntityToDto(UserAccountEntity entity) => new()
+        public async Task<UserAccountDto> CreateUserAccount(UserAccountDto userAccountDto)
         {
-            Id = entity.Id,
-            Email = entity.Email,
-            Password = entity.Password
-        };
+            var addedEntity = await _repository.AddAsync(new UserAccountEntity
+            {
+                Email = userAccountDto.Email,
+                Password = BCrypt.Net.BCrypt.HashPassword(userAccountDto.Password),
+            });
 
-        public UserAccountEntity ConvertUserAccountDtoToEntity(UserAccountDto dto) => new()
-        {
-            Email = dto.Email,
-            Password = BCrypt.Net.BCrypt.HashPassword(dto.Password),
-        };
-
-        public async Task CreateUserAccount(UserAccountDto userAccountDto)
-        {
-            var entity = ConvertUserAccountDtoToEntity(userAccountDto);
-            await _repository.AddAsync(entity);
+            return new UserAccountDto
+            {
+                Id = addedEntity.Id,
+            };
         }
     }
 }

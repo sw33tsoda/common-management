@@ -1,5 +1,5 @@
 using Server.Entities;
-using Server.Models;
+using Server.Dtos;
 
 namespace Server.Interfaces
 {
@@ -7,8 +7,6 @@ namespace Server.Interfaces
     {
         Task<UserAccountDto?> GetUserAccountByUserId(Guid? givenUserId);
         Task<UserAccountDto?> GetUserAccountByEmail(string givenEmail);
-        UserAccountDto ConvertUserAccountEntityToDto(UserAccountEntity entity);
-        UserAccountEntity ConvertUserAccountDtoToEntity(UserAccountDto dto);
-        Task CreateUserAccount(UserAccountDto userAccountDto);
+        Task<UserAccountDto> CreateUserAccount(UserAccountDto userAccountDto);
     }
 }
