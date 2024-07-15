@@ -5,8 +5,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Server.Contexts;
 using Server.Interfaces;
-using Server.Models;
+using Server.Dtos;
 using Server.Services;
+using Server.Middlewares;
+using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
@@ -65,8 +67,6 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -78,6 +78,9 @@ if (app.Environment.IsDevelopment())
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseMiddleware<DtoValidationMiddleware>();
+
 app.UseHttpsRedirection();
 app.MapControllers();
 

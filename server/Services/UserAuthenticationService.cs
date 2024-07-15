@@ -1,7 +1,7 @@
 using Microsoft.IdentityModel.Tokens;
 using Server.Interfaces;
 using Server.Extensions;
-using Server.Models;
+using Server.Dtos;
 
 namespace Server.Services
 {
@@ -54,9 +54,9 @@ namespace Server.Services
             return _jwtService.GenerateToken(userAccountDto);
         }
 
-        public async Task Register(UserAccountDto userAccountDto)
+        public async Task<UserAccountDto> Register(UserAccountDto userAccountDto)
         {
-            await _userService.CreateUserAccount(userAccountDto);
+            return await _userService.CreateUserAccount(userAccountDto);
         }
     }
 }

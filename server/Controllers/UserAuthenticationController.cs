@@ -2,7 +2,8 @@ using Asp.Versioning;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Server.Interfaces;
-using Server.Models;
+using Server.Dtos;
+using Server.Attributes;
 
 namespace Server.Controllers
 {
@@ -19,19 +20,20 @@ namespace Server.Controllers
         }
 
         [AllowAnonymous]
+        [DtoValidate(typeof(UserAccountDto))]
         [HttpPost("login")]
-        public IActionResult Login(UserAccountDto userAccountDto)
+        public async Task<IActionResult> Login(UserAccountDto userAccountDto)
         {
-            var token = _userAuthenticationService.Authenticate(userAccountDto);
+            var token = await _userAuthenticationService.Authenticate(userAccountDto);
             return Ok(token);
         }
 
         [AllowAnonymous]
+        [DtoValidate(typeof(UserAccountDto))]
         [HttpPost("register")]
-        public async Task<IActionResult> Register(UserAccountDto userAccountDto)
+        public async Task<UserAccountDto> Register(UserAccountDto userAccountDto)
         {
-            await _userAuthenticationService.Register(userAccountDto);
-            return Ok("");
+            return await _userAuthenticationService.Register(userAccountDto);
         }
     }
 }
