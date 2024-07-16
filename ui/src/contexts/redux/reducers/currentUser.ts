@@ -14,16 +14,23 @@ export const currentUserSlice = createSlice({
     name: 'currentUser',
     initialState,
     reducers: {
-        GLOBAL_SET_CURRENT_USER: (state, action) => {
-            state = action.payload;
-        },
+        // GLOBAL_SET_CURRENT_USER: (state, action) => {
+        //     state = action.payload;
+        // },
         GLOBAL_UNSET_CURRENT_USER: () => initialState,
     },
 });
 
 const {
-    actions: { GLOBAL_SET_CURRENT_USER, GLOBAL_UNSET_CURRENT_USER },
+    actions: {
+        // GLOBAL_SET_CURRENT_USER,
+        GLOBAL_UNSET_CURRENT_USER,
+    },
     reducer: currentUserReducer,
 } = currentUserSlice;
 
-export { GLOBAL_SET_CURRENT_USER, GLOBAL_UNSET_CURRENT_USER, currentUserReducer };
+export {
+    // GLOBAL_SET_CURRENT_USER,
+    GLOBAL_UNSET_CURRENT_USER,
+    currentUserReducer,
+};
