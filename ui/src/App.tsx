@@ -1,11 +1,18 @@
-import { useDispatch } from 'react-redux';
-import { GLOBAL_THEME_SYSTEM_TOGGLE } from './contexts/redux/reducers/themeSystem';
-import { LoginPage } from './pages';
+import { Loading } from './components/Loading';
 
 const App = () => {
-    const dispatch = useDispatch();
-
-    return <>hello</>;
+    return (
+        <div className='app'>
+            <button
+                onClick={() => {
+                    $$.loadingAnimation(true);
+                }}
+            >
+                show loading
+            </button>
+            <Loading />
+        </div>
+    );
 };
 
 export default App;

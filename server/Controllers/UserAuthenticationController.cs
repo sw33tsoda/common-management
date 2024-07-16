@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Server.Interfaces;
 using Server.Dtos;
-using Server.Attributes;
 
 namespace Server.Controllers
 {
@@ -20,7 +19,6 @@ namespace Server.Controllers
         }
 
         [AllowAnonymous]
-        [DtoValidate(typeof(UserAccountDto))]
         [HttpPost("login")]
         public async Task<IActionResult> Login(UserAccountDto userAccountDto)
         {
@@ -29,7 +27,6 @@ namespace Server.Controllers
         }
 
         [AllowAnonymous]
-        [DtoValidate(typeof(UserAccountDto))]
         [HttpPost("register")]
         public async Task<UserAccountDto> Register(UserAccountDto userAccountDto)
         {
