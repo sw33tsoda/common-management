@@ -4,6 +4,7 @@ import './styles/main.scss';
 import { store } from './contexts';
 import { Provider } from 'react-redux';
 import { ThemeProvider } from './components';
+import './helpers/customizedWindowObject';
 
 // FONT
 import '@fontsource/roboto/300.css';

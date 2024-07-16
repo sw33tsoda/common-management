@@ -9,6 +9,7 @@ using Server.Dtos;
 using Server.Services;
 using Server.Middlewares;
 using Microsoft.AspNetCore.Mvc;
+using Server.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
