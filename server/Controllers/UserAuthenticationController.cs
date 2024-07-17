@@ -22,8 +22,7 @@ namespace Server.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login(UserAccountDto userAccountDto)
         {
-            var token = await _userAuthenticationService.Authenticate(userAccountDto);
-            return Ok(token);
+            return Ok(await _userAuthenticationService.Authenticate(userAccountDto));
         }
 
         [AllowAnonymous]
