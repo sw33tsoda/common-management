@@ -8,6 +8,13 @@ declare global {
 
 interface IGlobalThisHelpers {
     loadingAnimation: (status: boolean) => void;
+    storage: {
+        set: (key: string, value: string) => void;
+        get: (key: string) => string;
+        remove: (key: string) => void;
+        getByIndex: (key: number) => string;
+        clear: () => void;
+    };
 }
 
 interface IStringPrototypeHelpers {

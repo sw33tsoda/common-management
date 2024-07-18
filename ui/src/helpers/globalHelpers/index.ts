@@ -12,6 +12,13 @@ const globalThisHelpers: IGlobalThisHelpersProperty = {
         loadingAnimation: (status = true) => {
             document.getElementById(loadingComponentElementId)?.classList.toggle('hide', !status);
         },
+        storage: {
+            set: (key, value) => localStorage.setItem(key, value),
+            get: (key) => localStorage.getItem(key) ?? '',
+            remove: (key) => localStorage.removeItem(key),
+            getByIndex: (key) => localStorage.key(key) ?? '',
+            clear: () => localStorage.clear(),
+        },
     },
 };
 
