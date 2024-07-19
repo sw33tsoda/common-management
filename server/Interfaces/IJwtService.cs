@@ -4,6 +4,6 @@ namespace Server.Interfaces
 {
     public interface IJwtService
     {
-        string GenerateToken(UserAccountDto? user);
+        Task<string> GenerateToken(UserAccountDto? user);
     }
 }

@@ -5,14 +5,16 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Server.Interfaces;
 using Server.Dtos;
+using Server.Models;
 
 namespace Server.Services
 {
     public class JwtService : IJwtService
     {
         private readonly JwtOptions _options;
+        private readonly IUserService _userService;
 
-        public JwtService(IOptions<JwtOptions> options)
+        public JwtService(IOptions<JwtOptions> options, IUserService userService)
         {
             if (options.Value != null)
             {
@@ -22,19 +24,24 @@ namespace Server.Services
             {
                 throw new ArgumentNullException(nameof(options));
             }
+
+            _userService = userService;
         }
 
-        public string GenerateToken(UserAccountDto? user)
+        public async Task<string> GenerateToken(UserAccountDto? user)
         {
             ArgumentNullException.ThrowIfNull(user);
+            var userAccountEntity = await _userService.GetUserAccountByUserId(user.Id);
+            ArgumentNullException.ThrowIfNull(userAccountEntity);
             var key = Encoding.ASCII.GetBytes(_options.Key);
             var securityKey = new SymmetricSecurityKey(key);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(
                 [
-                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                new Claim(ClaimTypes.Email, user.Email),
+                new Claim(ClaimTypes.NameIdentifier, userAccountEntity.Id.ToString()),
+                new Claim(ClaimTypes.Email, userAccountEntity.Email),
+                new Claim(ClaimTypes.Role, Enum.GetName(userAccountEntity.UserRole) ?? string.Empty),
             ]),
                 Expires = DateTime.UtcNow.AddMinutes(10),
                 Issuer = _options.Issuer,

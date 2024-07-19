@@ -1,7 +1,8 @@
 using System.ComponentModel.DataAnnotations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Server.Dtos;
+using Server.Enums;
+using Server.Models;
 
 namespace Server.Entities
 {
@@ -20,6 +21,10 @@ namespace Server.Entities
         [MinLength(1, ErrorMessage = "minimum 1 character")]
         [MaxLength(128, ErrorMessage = "maximum 128 characters")]
         public string Password { get; set; }
+
+        [Required(ErrorMessage = "this field is required")]
+        public UserRole UserRole { get; set; }
+
         public virtual List<UserProfileEntity> UserProfiles { get; set; }
     }
 
