@@ -1,4 +1,7 @@
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
+using Server.Enums;
+using Server.Models;
 
 namespace Server.Dtos
 {
@@ -16,6 +19,7 @@ namespace Server.Dtos
         [MinLength(1, ErrorMessage = "minimum 1 character")]
         [MaxLength(128, ErrorMessage = "maximum 128 characters")]
         public string Password { get; set; }
+        public UserRole UserRole { get; set; }
         public Guid? UserProfileId { get; set; }
         public List<UserProfileDto>? UserProfiles { get; }
     }

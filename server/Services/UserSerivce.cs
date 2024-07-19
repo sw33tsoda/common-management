@@ -3,8 +3,6 @@ using Server.Entities;
 using Server.Interfaces;
 using Server.Dtos;
 using Server.Extensions;
-using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace Server.Services
 {

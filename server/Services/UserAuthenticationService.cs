@@ -51,7 +51,7 @@ namespace Server.Services
                 return null;
             }
 
-            return _jwtService.GenerateToken(userAccountDto);
+            return await _jwtService.GenerateToken(userAccountDto);
         }
 
         public async Task<UserAccountDto> Register(UserAccountDto userAccountDto)

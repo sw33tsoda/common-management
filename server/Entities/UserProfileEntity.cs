@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Server.Dtos;
+using Server.Models;
 
 namespace Server.Entities
 {

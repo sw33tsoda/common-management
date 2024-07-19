@@ -5,13 +5,25 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Server.Contexts;
 using Server.Interfaces;
-using Server.Dtos;
+using Server.Models;
 using Server.Services;
 using Server.Middlewares;
-using Microsoft.AspNetCore.Mvc;
-using Server.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowLocalhost",
+        builder =>
+        {
+            builder.WithOrigins("http://localhost:5173")
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials();
+        });
+});
+
+
 var configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
 
 // Attempt to connect database
@@ -77,11 +89,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseCors("AllowLocalhost");
 app.UseAuthentication();
 app.UseAuthorization();
-
 app.UseMiddleware<DtoValidationMiddleware>();
-
 app.UseHttpsRedirection();
 app.MapControllers();
 
