@@ -1,6 +1,10 @@
+using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
+using Server.Enums;
 using Server.Helpers;
+using Server.Models;
 
 namespace Server.Middlewares
 {
@@ -45,7 +49,15 @@ namespace Server.Middlewares
                             {
                                 context.Response.StatusCode = StatusCodes.Status400BadRequest;
                                 context.Response.ContentType = "application/json";
-                                await context.Response.WriteAsync(JsonConvert.SerializeObject(validationResults));
+                                var errors = JsonConvert.SerializeObject(new RequestError<List<ValidationResult>>
+                                {
+                                    Type = RequestErrorType.DtoValidate,
+                                    Data = validationResults
+                                }, new JsonSerializerSettings
+                                {
+                                    ContractResolver = new CamelCasePropertyNamesContractResolver()
+                                });
+                                await context.Response.WriteAsync(errors);
                             }
                         }
                     }

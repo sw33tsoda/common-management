@@ -1,19 +1,33 @@
-import { HttpRequestMethods, type IApiHelper, type TFetchHandler } from './misc';
+import {
+    HttpRequestMethods,
+    IRequestError,
+    IValidationResult,
+    RequestErrorType,
+    type IApiHelper,
+    type TFetchHandler,
+} from './misc';
 
 const apiFetchHandler: TFetchHandler = async ({ url, method, params }) => {
     try {
-        const response = await fetch(url, {
+        const options = {
             method,
             body: JSON.stringify(params),
             headers: {
                 'Content-Type': 'application/json',
             },
-        });
+        };
+        const response = await fetch(url, options);
+        const data = await response.json();
+
         if (response.ok) {
-            return response.json();
+            return data;
+        } else {
+            const errors: IRequestError<IValidationResult> = data;
+            if (errors.type.isEqual(RequestErrorType.DTOVALIDATE)) {
+            }
         }
-    } catch (error) {
-        console.log(error);
+    } catch {
+        console.log('An unknown error has occured during fetching API.');
     }
 };
 
