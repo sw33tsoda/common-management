@@ -4,10 +4,10 @@ import {
     IValidationResult,
     RequestErrorType,
     type IApiHelper,
-    type TFetchHandler,
+    type TApiFetchHandler,
 } from './misc';
 
-const apiFetchHandler: TFetchHandler = async ({ url, method, params }) => {
+const apiFetchHandler: TApiFetchHandler = async ({ url, method, params }) => {
     try {
         const options = {
             method,
@@ -19,16 +19,24 @@ const apiFetchHandler: TFetchHandler = async ({ url, method, params }) => {
         const response = await fetch(url, options);
         const data = await response.json();
 
-        if (response.ok) {
-            return data;
-        } else {
-            const errors: IRequestError<IValidationResult> = data;
-            if (errors.type.isEqual(RequestErrorType.DTOVALIDATE)) {
-            }
-        }
+        return response.ok ? data : apiFetchErrorHandler(data);
     } catch {
         console.log('An unknown error has occured during fetching API.');
     }
+};
+
+const apiFetchErrorHandler = (error: IRequestError<unknown>) => {
+    switch (error.type) {
+        case RequestErrorType.DTOVALIDATE:
+            return dtoValidateErrorHandler(error as IRequestError<Array<IValidationResult>>);
+        default:
+            break;
+    }
+};
+
+const dtoValidateErrorHandler = (error: IRequestError<Array<IValidationResult>>) => {
+    // Should be implement after error handler
+    return error;
 };
 
 const api: IApiHelper = {

@@ -2,7 +2,7 @@ declare global {
     const $$: IGlobalThisHelpers;
     interface String extends IStringPrototypeHelpers {}
     interface Number extends INumberPrototypeHelpers {}
-    interface Array<T> extends IArrayPrototypeHelpers {}
+    interface Array<T> extends IArrayPrototypeHelpers<T> {}
     interface Object extends IObjectPrototypeHelpers {}
 }
 
@@ -15,6 +15,7 @@ interface IGlobalThisHelpers {
         getByIndex: (key: number) => string;
         clear: () => void;
     };
+    cloneDeep: (obj: object) => object;
 }
 
 interface IStringPrototypeHelpers {
@@ -29,17 +30,21 @@ interface INumberPrototypeHelpers {
     isOdd(): boolean;
 }
 
-interface IArrayPrototypeHelpers {}
+interface IArrayPrototypeHelpers<T> {
+    getLength(
+        callback?: (value: T, index?: number | undefined, array?: T[] | undefined) => boolean,
+    ): number;
+}
 
 interface IObjectPrototypeHelpers {}
 
-interface IGlobalThisHelpersProperty {
+type TGlobalThisHelpersProperty = typeof globalThis & {
     $$: IGlobalThisHelpers;
-}
+};
 
 export {
     type IGlobalThisHelpers,
-    type IGlobalThisHelpersProperty,
+    type TGlobalThisHelpersProperty,
     type IStringPrototypeHelpers,
     type INumberPrototypeHelpers,
     type IArrayPrototypeHelpers,

@@ -1,60 +1,60 @@
 import { loadingComponentElementId } from '../../components';
-import {
-    type IGlobalThisHelpersProperty,
-    type IStringPrototypeHelpers,
-    type INumberPrototypeHelpers,
-    type IArrayPrototypeHelpers,
-    type IObjectPrototypeHelpers,
-} from './misc';
+import { type TGlobalThisHelpersProperty } from './misc';
 
-const globalThisHelpers: IGlobalThisHelpersProperty = {
-    $$: {
-        loadingAnimation: (status = true) => {
-            document.getElementById(loadingComponentElementId)?.classList.toggle('hide', !status);
-        },
-        storage: {
-            set: (key, value) => localStorage.setItem(key, value),
-            get: (key) => localStorage.getItem(key) ?? '',
-            remove: (key) => localStorage.removeItem(key),
-            getByIndex: (key) => localStorage.key(key) ?? '',
-            clear: () => localStorage.clear(),
-        },
+/**
+ * Global helpers
+ */
+(globalThis as TGlobalThisHelpersProperty).$$ = {
+    loadingAnimation: (status = true) => {
+        document.getElementById(loadingComponentElementId)?.classList.toggle('hide', !status);
     },
+    storage: {
+        set: (key, value) => localStorage.setItem(key, value),
+        get: (key) => localStorage.getItem(key) ?? '',
+        remove: (key) => localStorage.removeItem(key),
+        getByIndex: (key) => localStorage.key(key) ?? '',
+        clear: () => localStorage.clear(),
+    },
+    cloneDeep: (object) => JSON.parse(JSON.stringify(object)),
 };
 
-const stringPrototypeHelpers: IStringPrototypeHelpers = {
-    isEqual(target) {
-        return this.valueOf() === target;
-    },
-    isLooselyEqual(target) {
-        return this.valueOf() == target;
-    },
+/**
+ * String
+ */
+String.prototype.isEqual = function (target) {
+    return this.valueOf() === target;
 };
 
-const numberPrototypeHelpers: INumberPrototypeHelpers = {
-    isEqual(target) {
-        return this.valueOf() === target;
-    },
-    isLooselyEqual(target) {
-        return this.valueOf() == target;
-    },
-    isEven() {
-        return Number(this.valueOf()) % 2 === 0;
-    },
-    isOdd() {
-        return Number(this.valueOf()) % 2 !== 0;
-    },
+String.prototype.isLooselyEqual = function (target) {
+    return this.valueOf() == target;
 };
 
-const arrayPrototypeHelpers: IArrayPrototypeHelpers = {};
+/**
+ * Number
+ */
+Number.prototype.isEqual = function (target) {
+    return this.valueOf() === target;
+};
 
-const objectPrototypeHelpers: IObjectPrototypeHelpers = {};
+Number.prototype.isLooselyEqual = function (target) {
+    return this.valueOf() == target;
+};
 
-Object.assign(globalThis, globalThisHelpers);
-Object.assign(String.prototype, stringPrototypeHelpers);
-Object.assign(Number.prototype, numberPrototypeHelpers);
-Object.assign(Array.prototype, arrayPrototypeHelpers);
-Object.assign(Object.prototype, objectPrototypeHelpers);
+Number.prototype.isEven = function () {
+    return Number(this.valueOf()) % 2 === 0;
+};
 
-// Export for unit tests
-export { globalThisHelpers, stringPrototypeHelpers, numberPrototypeHelpers };
+Number.prototype.isOdd = function () {
+    return Number(this.valueOf()) % 2 !== 0;
+};
+
+/**
+ * Array
+ */
+Array.prototype.getLength = function (callback) {
+    if (typeof callback === 'function') {
+        return (this.valueOf() as Array<unknown>).filter(callback).length;
+    }
+
+    return (this.valueOf() as Array<unknown>).length;
+};

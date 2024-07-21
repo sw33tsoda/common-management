@@ -12,7 +12,7 @@ interface IFetchHelperParameters<P> {
     params: P;
 }
 
-type TFetchHandler = <P, R>(parameter: IFetchHelperParameters<P>) => Promise<R>;
+type TApiFetchHandler = <P, R>(parameter: IFetchHelperParameters<P>) => Promise<R>;
 
 type IApiHelperImplementation = <P, R>(url: string, params: P) => Promise<R>;
 
@@ -23,17 +23,18 @@ interface IValidationResult {
     memberNames: Array<string>;
 }
 
-interface IRequestError<T> {
+interface IRequestError<T = void> {
     type: RequestErrorType;
     data: T;
 }
 
 enum RequestErrorType {
     DTOVALIDATE = 0,
+    SESSIONTIMEOUT = 1,
 }
 
 export {
-    type TFetchHandler,
+    type TApiFetchHandler,
     type IApiHelper,
     type IApiHelperImplementation,
     type IValidationResult,
