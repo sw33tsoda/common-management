@@ -32,26 +32,31 @@ namespace Server.Services
             return BCrypt.Net.BCrypt.Verify(givenPassword, storedPassword);
         }
 
-        public async Task<bool> CheckAuthenticationLegit(UserAccountDto userAccountDto)
+        public async Task<bool> CheckAuthenticationLegit(LoginParamsDto loginParamsDto)
         {
-            var user = await _userService.GetUserAccountByEmail(userAccountDto.Email);
+            var user = await _userService.GetUserAccountByEmail(loginParamsDto.Email);
 
             if (user == null)
             {
                 throw new Exception("User does not exist");
             }
 
-            return CheckPasswordMatch(userAccountDto.Password, user.Password);
+            return CheckPasswordMatch(loginParamsDto.Password, user.Password);
         }
 
-        public async Task<string?> Authenticate(UserAccountDto userAccountDto)
+        public async Task<LoginResponseDto?> Authenticate(LoginParamsDto loginParamsDto)
         {
-            if (!await CheckAuthenticationLegit(userAccountDto))
+            if (!await CheckAuthenticationLegit(loginParamsDto))
             {
                 return null;
             }
 
-            return await _jwtService.GenerateToken(userAccountDto);
+            var token = await _jwtService.GenerateToken(loginParamsDto.Email);
+
+            return new LoginResponseDto
+            {
+                Token = token
+            };
         }
 
         public async Task<UserAccountDto> Register(UserAccountDto userAccountDto)

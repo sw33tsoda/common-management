@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Server.Interfaces;
 using Server.Dtos;
-using Newtonsoft.Json.Linq;
 
 namespace Server.Controllers
 {
@@ -21,9 +20,9 @@ namespace Server.Controllers
 
         [AllowAnonymous]
         [HttpPost("login")]
-        public async Task<IActionResult> Login(UserAccountDto userAccountDto)
+        public async Task<IActionResult> Login(LoginParamsDto loginParamsDto)
         {
-            return Ok(await _userAuthenticationService.Authenticate(userAccountDto));
+            return Ok(await _userAuthenticationService.Authenticate(loginParamsDto));
         }
 
         [AllowAnonymous]
