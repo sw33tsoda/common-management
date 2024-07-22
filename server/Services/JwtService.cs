@@ -28,10 +28,10 @@ namespace Server.Services
             _userService = userService;
         }
 
-        public async Task<string> GenerateToken(UserAccountDto? user)
+        public async Task<string> GenerateToken(string email)
         {
-            ArgumentNullException.ThrowIfNull(user);
-            var userAccountEntity = await _userService.GetUserAccountByUserId(user.Id);
+            ArgumentNullException.ThrowIfNull(email);
+            var userAccountEntity = await _userService.GetUserAccountByEmail(email);
             ArgumentNullException.ThrowIfNull(userAccountEntity);
             var key = Encoding.ASCII.GetBytes(_options.Key);
             var securityKey = new SymmetricSecurityKey(key);
