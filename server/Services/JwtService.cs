@@ -41,9 +41,9 @@ namespace Server.Services
                 [
                 new Claim(ClaimTypes.NameIdentifier, userAccountEntity.Id.ToString()),
                 new Claim(ClaimTypes.Email, userAccountEntity.Email),
-                new Claim(ClaimTypes.Role, Enum.GetName(userAccountEntity.UserRole) ?? string.Empty),
+                new Claim(ClaimTypes.Role, userAccountEntity.UserRole.ToString()),
             ]),
-                Expires = DateTime.UtcNow.AddMinutes(10),
+                Expires = DateTime.UtcNow.AddMinutes(_options.Expires),
                 Issuer = _options.Issuer,
                 Audience = _options.Audience,
                 SigningCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256Signature)

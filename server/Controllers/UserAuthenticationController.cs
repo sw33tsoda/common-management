@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Server.Interfaces;
 using Server.Dtos;
+using Microsoft.Extensions.Options;
+using Server.Models;
 
 namespace Server.Controllers
 {
@@ -12,17 +14,31 @@ namespace Server.Controllers
     public class UserAuthenticationController : ControllerBase
     {
         private readonly IUserAuthenticationService _userAuthenticationService;
+        private readonly IOptions<JwtOptions> _jwtOptions;
 
-        public UserAuthenticationController(IUserAuthenticationService userAuthenticationService)
+        public UserAuthenticationController(IUserAuthenticationService userAuthenticationService, IOptions<JwtOptions> jwtOptions)
         {
             _userAuthenticationService = userAuthenticationService;
+            ArgumentNullException.ThrowIfNull(jwtOptions.Value);
+            _jwtOptions = jwtOptions;
         }
 
         [AllowAnonymous]
         [HttpPost("login")]
         public async Task<IActionResult> Login(LoginParamsDto loginParamsDto)
         {
-            return Ok(await _userAuthenticationService.Authenticate(loginParamsDto));
+            var dto = await _userAuthenticationService.Authenticate(loginParamsDto);
+
+            ArgumentNullException.ThrowIfNull(dto);
+            Response.Cookies.Append("jwtToken", dto.Token, new CookieOptions
+            {
+                Expires = DateTimeOffset.UtcNow.AddMinutes(_jwtOptions.Value.Expires),
+                Secure = true,
+                HttpOnly = true,
+                SameSite = SameSiteMode.Strict
+            });
+
+            return Ok(dto);
         }
 
         [AllowAnonymous]
