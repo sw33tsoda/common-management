@@ -9,14 +9,14 @@ import {
 
 const apiFetchHandler: TApiFetchHandler = async ({ url, method, params }) => {
     try {
-        const options = {
+        const response = await fetch('http://localhost:5053/api' + url, {
             method,
             body: JSON.stringify(params),
             headers: {
                 'Content-Type': 'application/json',
             },
-        };
-        const response = await fetch('http://localhost:5053/api' + url, options);
+            credentials: 'include',
+        });
         const data = await response.json();
 
         return response.ok ? data : apiFetchErrorHandler(data);
