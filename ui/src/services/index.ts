@@ -1,6 +1,6 @@
 import { apiUrl } from '../constants';
 import { api } from '../helpers';
-import { IUserAuthenticationService } from './misc';
+import { type IUserAuthenticationService } from './misc';
 
 const userAuthenticationService: IUserAuthenticationService = {
     register: (params) => api.post(apiUrl.userAuthentication.register_post, params),
