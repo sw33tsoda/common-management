@@ -1,9 +1,21 @@
-import { IUserAuthenticationServiceApiUrl, TApiServiceMethod } from '../constants/apiUrl/misc';
+interface IUserAuthenticationService {
+    register: (params: IRegisterParamsDto) => Promise<IRegisterResponseDto>;
+    login: (params: ILoginParamsDto) => Promise<ILoginResponseDto>;
+}
 
-type TService<K> = Record<keyof TApiServiceMethod<K>, <P, R>(params: P) => Promise<R>>;
+/**
+ * Register
+ */
+interface IRegisterParamsDto {
+    email: string;
+    password: string;
+}
 
-interface IUserAuthenticationService extends TService<IUserAuthenticationServiceApiUrl> {}
+interface IRegisterResponseDto {}
 
+/**
+ * Login
+ */
 interface ILoginParamsDto {
     email: string;
     password: string;
@@ -13,9 +25,4 @@ interface ILoginResponseDto {
     token: string;
 }
 
-export {
-    type TService,
-    type IUserAuthenticationService,
-    type ILoginParamsDto,
-    type ILoginResponseDto,
-};
+export { type IUserAuthenticationService, type ILoginParamsDto, type ILoginResponseDto };
