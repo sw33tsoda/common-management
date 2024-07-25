@@ -1,22 +1,31 @@
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Server.Models;
 
 namespace Server.Entities
 {
     public class UserProfileEntity : RecordBasicDate
     {
-        [Key]
         public Guid Id { get; set; }
-
-        [Required(AllowEmptyStrings = false, ErrorMessage = "this field is required")]
-        [MinLength(1, ErrorMessage = "minimum 1 character")]
-        [MaxLength(32, ErrorMessage = "maximum 32 characters")]
         public string DisplayName { get; set; }
-
         public Guid UserAccountId { get; set; }
-
-        [ForeignKey("UserAccountId")]
         public virtual UserAccountEntity UserAccount { get; set; }
+        public bool IsProfileInUse { get; set; }
+    }
+
+    public class UserProfileEntityConfiguration : IEntityTypeConfiguration<UserProfileEntity>
+    {
+        public void Configure(EntityTypeBuilder<UserProfileEntity> builder)
+        {
+            builder.ToTable("UserProfiles");
+            builder.HasKey(entity => entity.Id);
+            builder.Property(entity => entity.DisplayName)
+                .HasMaxLength(32)
+                .IsRequired(false);
+            builder.Property(entity => entity.IsProfileInUse).HasDefaultValue(false);
+            builder.HasOne(entity => entity.UserAccount)
+                .WithMany(entity => entity.UserProfiles)
+                .HasForeignKey(entity => entity.UserAccountId);
+        }
     }
 }

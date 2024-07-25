@@ -15,7 +15,7 @@ namespace Server.Services
             _repository = repository;
         }
 
-        public async Task<UserAccountDto?> GetUserAccountByUserId(Guid? givenUserId)
+        public async Task<UserAccountDto> GetUserAccountByUserId(Guid? givenUserId)
         {
             if (givenUserId.IsNullOrEmpty())
             {
@@ -24,10 +24,7 @@ namespace Server.Services
 
             var entity = await _repository.FindAsync<UserAccountEntity>(entity => entity.Id == givenUserId);
 
-            if (entity == null)
-            {
-                return null;
-            }
+            ArgumentNullException.ThrowIfNull(entity);
 
             return new UserAccountDto
             {
@@ -37,7 +34,7 @@ namespace Server.Services
             };
         }
 
-        public async Task<UserAccountDto?> GetUserAccountByEmail(string givenEmail)
+        public async Task<UserAccountDto> GetUserAccountByEmail(string givenEmail)
         {
             if (givenEmail.IsNullOrEmpty())
             {
@@ -46,10 +43,7 @@ namespace Server.Services
 
             var entity = await _repository.FindAsync<UserAccountEntity>(entity => entity.Email == givenEmail);
 
-            if (entity == null)
-            {
-                return null;
-            }
+            ArgumentNullException.ThrowIfNull(entity);
 
             return new UserAccountDto
             {
@@ -59,18 +53,14 @@ namespace Server.Services
             };
         }
 
-        public async Task<UserAccountDto> CreateUserAccount(UserAccountDto userAccountDto)
+        public async Task<UserAccountEntity> AddUserAccount(UserAccountEntity userAccountEntity)
         {
-            var addedEntity = await _repository.AddAsync(new UserAccountEntity
-            {
-                Email = userAccountDto.Email,
-                Password = BCrypt.Net.BCrypt.HashPassword(userAccountDto.Password),
-            });
+            return await _repository.AddAsync(userAccountEntity);
+        }
 
-            return new UserAccountDto
-            {
-                Id = addedEntity.Id,
-            };
+        public async Task<UserProfileEntity> AddUserProfile(UserProfileEntity userProfileEntity)
+        {
+            return await _repository.AddAsync(userProfileEntity);
         }
     }
 }

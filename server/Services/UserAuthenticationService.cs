@@ -2,6 +2,8 @@ using Microsoft.IdentityModel.Tokens;
 using Server.Interfaces;
 using Server.Extensions;
 using Server.Dtos;
+using Server.Enums;
+using Server.Entities;
 
 namespace Server.Services
 {
@@ -44,11 +46,11 @@ namespace Server.Services
             return CheckPasswordMatch(loginParamsDto.Password, user.Password);
         }
 
-        public async Task<LoginResponseDto?> Authenticate(LoginParamsDto loginParamsDto)
+        public async Task<LoginResponseDto> Authenticate(LoginParamsDto loginParamsDto)
         {
             if (!await CheckAuthenticationLegit(loginParamsDto))
             {
-                return null;
+                throw new Exception("Password is not matched");
             }
 
             var token = await _jwtService.GenerateToken(loginParamsDto.Email);
@@ -59,9 +61,34 @@ namespace Server.Services
             };
         }
 
-        public async Task<UserAccountDto> Register(UserAccountDto userAccountDto)
+        public async Task<RegisterResponseDto> Register(RegisterParamsDto registerParamsDto)
         {
-            return await _userService.CreateUserAccount(userAccountDto);
+            var addedUserAccountEntity = await _userService.AddUserAccount(new UserAccountEntity
+            {
+                Email = registerParamsDto.Email,
+                Password = BCrypt.Net.BCrypt.HashPassword(registerParamsDto.Password),
+                UserRole = UserRole.Anonymous,
+                CreatedAt = DateTime.UtcNow,
+                ModifiedAt = DateTime.UtcNow
+            });
+            ArgumentNullException.ThrowIfNull(addedUserAccountEntity);
+            var addedUserProfileEntity = await _userService.AddUserProfile(new UserProfileEntity
+            {
+                UserAccountId = addedUserAccountEntity.Id,
+                IsProfileInUse = true,
+                CreatedAt = DateTime.UtcNow,
+                ModifiedAt = DateTime.UtcNow,
+            });
+            ArgumentNullException.ThrowIfNull(addedUserProfileEntity);
+            var userAccountDto = new UserAccountDto
+            {
+                Email = addedUserAccountEntity.Email
+            };
+
+            return new RegisterResponseDto
+            {
+                UserAccount = userAccountDto
+            };
         }
     }
 }

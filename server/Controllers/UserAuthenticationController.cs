@@ -30,7 +30,7 @@ namespace Server.Controllers
             var dto = await _userAuthenticationService.Authenticate(loginParamsDto);
 
             ArgumentNullException.ThrowIfNull(dto);
-            Response.Cookies.Append("jwtToken", dto.Token, new CookieOptions
+            Response.Cookies.Append("access_token", dto.Token, new CookieOptions
             {
                 Expires = DateTimeOffset.UtcNow.AddMinutes(_jwtOptions.Value.Expires),
                 Secure = true,
@@ -43,9 +43,9 @@ namespace Server.Controllers
 
         [AllowAnonymous]
         [HttpPost("register")]
-        public async Task<UserAccountDto> Register(UserAccountDto userAccountDto)
+        public async Task<RegisterResponseDto> Register(RegisterParamsDto registerParamsDto)
         {
-            return await _userAuthenticationService.Register(userAccountDto);
+            return await _userAuthenticationService.Register(registerParamsDto);
         }
     }
 }
