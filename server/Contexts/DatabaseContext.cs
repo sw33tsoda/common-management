@@ -16,6 +16,7 @@ namespace Server.Contexts
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new UserAccountEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new UserProfileEntityConfiguration());
             base.OnModelCreating(modelBuilder);
         }
     }

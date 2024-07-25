@@ -58,7 +58,7 @@ namespace server.Migrations
                     b.HasIndex("Email")
                         .IsUnique();
 
-                    b.ToTable("UserAccount", (string)null);
+                    b.ToTable("UserAccounts", (string)null);
                 });
 
             modelBuilder.Entity("Server.Entities.UserProfileEntity", b =>
@@ -74,9 +74,13 @@ namespace server.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<string>("DisplayName")
-                        .IsRequired()
                         .HasMaxLength(32)
                         .HasColumnType("character varying(32)");
+
+                    b.Property<bool>("IsProfileInUse")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(false);
 
                     b.Property<DateTime>("ModifiedAt")
                         .HasColumnType("timestamp with time zone");
@@ -91,7 +95,7 @@ namespace server.Migrations
 
                     b.HasIndex("UserAccountId");
 
-                    b.ToTable("UserProfiles");
+                    b.ToTable("UserProfiles", (string)null);
                 });
 
             modelBuilder.Entity("Server.Entities.UserProfileEntity", b =>

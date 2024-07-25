@@ -6,7 +6,7 @@ namespace Server.Interfaces
     {
         bool CheckPasswordMatch(string? givenPassword, string? storedPassword);
         Task<bool> CheckAuthenticationLegit(LoginParamsDto loginParamsDto);
-        Task<LoginResponseDto?> Authenticate(LoginParamsDto loginParamsDto);
-        Task<UserAccountDto> Register(UserAccountDto userAccountDto);
+        Task<LoginResponseDto> Authenticate(LoginParamsDto loginParamsDto);
+        Task<RegisterResponseDto> Register(RegisterParamsDto registerParamsDto);
     }
 }
