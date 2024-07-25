@@ -29,8 +29,10 @@ interface IRequestError<T = void> {
 }
 
 enum RequestErrorType {
-    DTOVALIDATE = 0,
-    SESSIONTIMEOUT = 1,
+    ServerError = 0,
+    DtoValidate = 1,
+    ResourceNotFound = 2,
+    Unauthorized = 3,
 }
 
 export {

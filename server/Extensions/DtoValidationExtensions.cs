@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using Server.Exceptions;
 
 namespace Server.Extensions
 {
@@ -8,7 +9,7 @@ namespace Server.Extensions
         {
             if (obj == null)
             {
-                throw new ArgumentNullException(nameof(obj));
+                throw new ServerException();
             }
 
             var context = new ValidationContext(obj, serviceProvider: null, items: null);

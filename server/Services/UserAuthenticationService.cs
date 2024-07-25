@@ -1,9 +1,8 @@
-using Microsoft.IdentityModel.Tokens;
 using Server.Interfaces;
-using Server.Extensions;
 using Server.Dtos;
 using Server.Enums;
 using Server.Entities;
+using Server.Exceptions;
 
 namespace Server.Services
 {
@@ -20,29 +19,14 @@ namespace Server.Services
             _logger = logger;
         }
 
-        public bool CheckPasswordMatch(string? givenPassword, string? storedPassword)
+        public bool CheckPasswordMatch(string givenPassword, string storedPassword)
         {
-            if (givenPassword.IsNullOrEmpty())
-            {
-                throw new ArgumentNullException(nameof(givenPassword), "cannot be null or empty");
-            }
-            else if (storedPassword.IsNullOrEmpty())
-            {
-                throw new ArgumentNullException(nameof(storedPassword), "cannot be null or empty");
-            }
-
             return BCrypt.Net.BCrypt.Verify(givenPassword, storedPassword);
         }
 
         public async Task<bool> CheckAuthenticationLegit(LoginParamsDto loginParamsDto)
         {
             var user = await _userService.GetUserAccountByEmail(loginParamsDto.Email);
-
-            if (user == null)
-            {
-                throw new Exception("User does not exist");
-            }
-
             return CheckPasswordMatch(loginParamsDto.Password, user.Password);
         }
 
@@ -50,7 +34,7 @@ namespace Server.Services
         {
             if (!await CheckAuthenticationLegit(loginParamsDto))
             {
-                throw new Exception("Password is not matched");
+                throw new UnauthorizedException("Password is not matched");
             }
 
             var token = await _jwtService.GenerateToken(loginParamsDto.Email);

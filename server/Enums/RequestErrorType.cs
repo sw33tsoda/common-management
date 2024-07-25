@@ -3,6 +3,9 @@ namespace Server.Enums
 {
     public enum RequestErrorType
     {
-        DtoValidate = 0
+        ServerError = 0,
+        DtoValidate = 1,
+        ResourceNotFound = 2,
+        Unauthorized = 3,
     }
 }
