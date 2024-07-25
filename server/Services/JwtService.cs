@@ -4,8 +4,8 @@ using System.Text;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Server.Interfaces;
-using Server.Dtos;
 using Server.Models;
+using Server.Exceptions;
 
 namespace Server.Services
 {
@@ -22,7 +22,7 @@ namespace Server.Services
             }
             else
             {
-                throw new ArgumentNullException(nameof(options));
+                throw new ServerException();
             }
 
             _userService = userService;

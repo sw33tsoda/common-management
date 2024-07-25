@@ -22,7 +22,6 @@ namespace Server.Middlewares
         public async Task InvokeAsync(HttpContext context)
         {
             var endpoint = context.GetEndpoint();
-
             if (endpoint != null)
             {
                 var controllerActionDescriptor = endpoint.Metadata.GetMetadata<ControllerActionDescriptor>();
@@ -52,7 +51,9 @@ namespace Server.Middlewares
                                 var errors = JsonConvert.SerializeObject(new RequestError<List<ValidationResult>>
                                 {
                                     Type = RequestErrorType.DtoValidate,
-                                    Data = validationResults
+                                    Data = validationResults,
+                                    Message = "Invalid payload.",
+                                    StatusCode = StatusCodes.Status400BadRequest
                                 }, new JsonSerializerSettings
                                 {
                                     ContractResolver = new CamelCasePropertyNamesContractResolver()

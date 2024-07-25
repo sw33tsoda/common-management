@@ -1,8 +1,7 @@
-using Microsoft.IdentityModel.Tokens;
 using Server.Entities;
 using Server.Interfaces;
 using Server.Dtos;
-using Server.Extensions;
+using Server.Exceptions;
 
 namespace Server.Services
 {
@@ -15,16 +14,14 @@ namespace Server.Services
             _repository = repository;
         }
 
-        public async Task<UserAccountDto> GetUserAccountByUserId(Guid? givenUserId)
+        public async Task<UserAccountDto> GetUserAccountByUserId(Guid givenUserId)
         {
-            if (givenUserId.IsNullOrEmpty())
-            {
-                throw new ArgumentNullException(nameof(givenUserId), "cannot be null or empty");
-            }
-
             var entity = await _repository.FindAsync<UserAccountEntity>(entity => entity.Id == givenUserId);
 
-            ArgumentNullException.ThrowIfNull(entity);
+            if (entity == null)
+            {
+                throw new ResourceNotFoundException("User account does not exist");
+            }
 
             return new UserAccountDto
             {
@@ -36,14 +33,12 @@ namespace Server.Services
 
         public async Task<UserAccountDto> GetUserAccountByEmail(string givenEmail)
         {
-            if (givenEmail.IsNullOrEmpty())
-            {
-                throw new ArgumentNullException(nameof(givenEmail), "cannot be null or empty");
-            }
-
             var entity = await _repository.FindAsync<UserAccountEntity>(entity => entity.Email == givenEmail);
 
-            ArgumentNullException.ThrowIfNull(entity);
+            if (entity == null)
+            {
+                throw new ResourceNotFoundException("User account does not exist");
+            }
 
             return new UserAccountDto
             {
