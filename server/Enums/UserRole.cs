@@ -1,4 +1,3 @@
-
 namespace Server.Enums
 {
     public enum UserRole

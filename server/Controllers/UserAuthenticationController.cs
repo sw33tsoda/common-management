@@ -29,7 +29,6 @@ namespace Server.Controllers
         {
             var dto = await _userAuthenticationService.Authenticate(loginParamsDto);
 
-            ArgumentNullException.ThrowIfNull(dto);
             Response.Cookies.Append("access_token", dto.Token, new CookieOptions
             {
                 Expires = DateTimeOffset.UtcNow.AddMinutes(_jwtOptions.Value.Expires),

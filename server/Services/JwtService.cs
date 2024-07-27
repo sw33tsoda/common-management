@@ -16,15 +16,8 @@ namespace Server.Services
 
         public JwtService(IOptions<JwtOptions> options, IUserService userService)
         {
-            if (options.Value != null)
-            {
-                _options = options.Value;
-            }
-            else
-            {
-                throw new ServerException();
-            }
-
+            ArgumentNullException.ThrowIfNull(options.Value);
+            _options = options.Value;
             _userService = userService;
         }
 

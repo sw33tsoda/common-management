@@ -29,9 +29,9 @@ namespace Server.Middlewares
             }
             catch (Exception exception)
             {
-                var manualException = new ServerException();
-                HandleLogException(manualException.CorrelationId, exception.ToString());
-                await HandleExceptionAsync(context, manualException);
+                var serverException = new ServerException();
+                HandleLogException(serverException.CorrelationId, exception.ToString());
+                await HandleExceptionAsync(context, serverException);
             }
         }
 
