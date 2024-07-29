@@ -29,7 +29,7 @@ namespace Server.Controllers
         {
             var dto = await _userAuthenticationService.Authenticate(loginParamsDto);
 
-            Response.Cookies.Append("access_token", dto.Token, new CookieOptions
+            Response.Cookies.Append(_jwtOptions.Value.CookieKeyName, dto.Token, new CookieOptions
             {
                 Expires = DateTimeOffset.UtcNow.AddMinutes(_jwtOptions.Value.Expires),
                 Secure = true,

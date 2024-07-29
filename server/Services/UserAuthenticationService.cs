@@ -34,7 +34,7 @@ namespace Server.Services
         {
             if (!await CheckAuthenticationLegit(loginParamsDto))
             {
-                throw new UnauthorizedException("Password is not matched");
+                throw new UnauthorizedException(ExceptionDetailType.WrongPassword);
             }
 
             var token = await _jwtService.GenerateToken(loginParamsDto.Email);

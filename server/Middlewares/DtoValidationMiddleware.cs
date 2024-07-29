@@ -2,9 +2,9 @@ using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using Server.Dtos;
 using Server.Enums;
 using Server.Helpers;
-using Server.Models;
 
 namespace Server.Middlewares
 {
@@ -48,9 +48,9 @@ namespace Server.Middlewares
                             {
                                 context.Response.StatusCode = StatusCodes.Status400BadRequest;
                                 context.Response.ContentType = "application/json";
-                                var errors = JsonConvert.SerializeObject(new RequestError<List<ValidationResult>>
+                                var errors = JsonConvert.SerializeObject(new ServerExceptionResponseDto<List<ValidationResult>>
                                 {
-                                    Type = RequestErrorType.DtoValidate,
+                                    Type = ExceptionType.DtoValidate,
                                     Data = validationResults,
                                     Message = "Invalid payload.",
                                     StatusCode = StatusCodes.Status400BadRequest
