@@ -5,7 +5,6 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Server.Interfaces;
 using Server.Models;
-using Server.Exceptions;
 
 namespace Server.Services
 {

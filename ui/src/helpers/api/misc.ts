@@ -23,12 +23,22 @@ interface IValidationResult {
     memberNames: Array<string>;
 }
 
-interface IRequestError<T = void> {
-    type: RequestErrorType;
+interface IServerExceptionResponseDto<T = void> {
+    type: ExceptionType;
+    detailType: ExceptionDetailType;
+    statusCode: number;
+    message: string;
+    correlationId: string;
     data: T;
 }
 
-enum RequestErrorType {
+enum ExceptionDetailType {
+    ServerError = 0,
+    UserDoesNotExist = 1,
+    WrongPassword = 2,
+}
+
+enum ExceptionType {
     ServerError = 0,
     DtoValidate = 1,
     ResourceNotFound = 2,
@@ -40,7 +50,7 @@ export {
     type IApiHelper,
     type IApiHelperImplementation,
     type IValidationResult,
-    type IRequestError,
+    type IServerExceptionResponseDto,
     HttpRequestMethods,
-    RequestErrorType,
+    ExceptionType,
 };

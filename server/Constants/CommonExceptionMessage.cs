@@ -1,6 +1,6 @@
 namespace Server.Constants
 {
-    public static class ExceptionMessage
+    public static class CommonExceptionMessage
     {
         public const string ResourceNotFound = "Resource not found";
         public const string Unauthorized = "Unauthorized";

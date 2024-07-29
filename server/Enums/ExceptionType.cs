@@ -1,7 +1,7 @@
 
 namespace Server.Enums
 {
-    public enum RequestErrorType
+    public enum ExceptionType
     {
         ServerError = 0,
         DtoValidate = 1,

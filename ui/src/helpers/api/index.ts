@@ -1,8 +1,8 @@
 import {
     HttpRequestMethods,
-    IRequestError,
+    IServerExceptionResponseDto,
     IValidationResult,
-    RequestErrorType,
+    ExceptionType,
     type IApiHelper,
     type TApiFetchHandler,
 } from './misc';
@@ -25,31 +25,29 @@ const apiFetchHandler: TApiFetchHandler = async ({ url, method, params }) => {
     }
 };
 
-const apiFetchErrorHandler = (error: IRequestError<unknown>) => {
+const apiFetchErrorHandler = (error: IServerExceptionResponseDto<unknown>) => {
     switch (error.type) {
-        case RequestErrorType.DTOVALIDATE:
-            return dtoValidateErrorHandler(error as IRequestError<Array<IValidationResult>>);
+        case ExceptionType.DtoValidate:
+            return dtoValidateErrorHandler(error as IServerExceptionResponseDto<Array<IValidationResult>>);
+
         default:
-            break;
+            return;
     }
+
+    return;
 };
 
-const dtoValidateErrorHandler = (error: IRequestError<Array<IValidationResult>>) => {
-    // Should be implement after error handler
+const dtoValidateErrorHandler = (error: IServerExceptionResponseDto<Array<IValidationResult>>) => {
+    // TODO:
     return error;
 };
 
 const api: IApiHelper = {
-    [HttpRequestMethods.GET]: (url, params) =>
-        apiFetchHandler({ url, params, method: HttpRequestMethods.GET }),
-    [HttpRequestMethods.POST]: (url, params) =>
-        apiFetchHandler({ url, params, method: HttpRequestMethods.POST }),
-    [HttpRequestMethods.PUT]: (url, params) =>
-        apiFetchHandler({ url, params, method: HttpRequestMethods.PUT }),
-    [HttpRequestMethods.PATCH]: (url, params) =>
-        apiFetchHandler({ url, params, method: HttpRequestMethods.PATCH }),
-    [HttpRequestMethods.DELETE]: (url, params) =>
-        apiFetchHandler({ url, params, method: HttpRequestMethods.DELETE }),
+    [HttpRequestMethods.GET]: (url, params) => apiFetchHandler({ url, params, method: HttpRequestMethods.GET }),
+    [HttpRequestMethods.POST]: (url, params) => apiFetchHandler({ url, params, method: HttpRequestMethods.POST }),
+    [HttpRequestMethods.PUT]: (url, params) => apiFetchHandler({ url, params, method: HttpRequestMethods.PUT }),
+    [HttpRequestMethods.PATCH]: (url, params) => apiFetchHandler({ url, params, method: HttpRequestMethods.PATCH }),
+    [HttpRequestMethods.DELETE]: (url, params) => apiFetchHandler({ url, params, method: HttpRequestMethods.DELETE }),
 };
 
 export { api };

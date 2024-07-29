@@ -1,6 +1,6 @@
 using Newtonsoft.Json;
+using Server.Dtos;
 using Server.Exceptions;
-using Server.Models;
 
 namespace Server.Middlewares
 {
@@ -39,11 +39,12 @@ namespace Server.Middlewares
         {
             context.Response.StatusCode = exception.StatusCode;
             context.Response.ContentType = "application/json";
-            var errors = JsonConvert.SerializeObject(new RequestError
+            var errors = JsonConvert.SerializeObject(new ServerExceptionResponseDto
             {
                 Message = exception.Message,
                 StatusCode = exception.StatusCode,
                 Type = exception.Type,
+                DetailType = exception.DetailType,
                 CorrelationId = exception.CorrelationId,
             });
             await context.Response.WriteAsync(errors);

@@ -6,5 +6,6 @@ namespace Server.Models
         public string Audience { get; init; }
         public string Key { get; init; }
         public int Expires { get; init; }
+        public string CookieKeyName { get; init; }
     }
 }

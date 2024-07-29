@@ -2,6 +2,7 @@ using Server.Entities;
 using Server.Interfaces;
 using Server.Dtos;
 using Server.Exceptions;
+using Server.Enums;
 
 namespace Server.Services
 {
@@ -20,7 +21,7 @@ namespace Server.Services
 
             if (entity == null)
             {
-                throw new ResourceNotFoundException("User account does not exist");
+                throw new ResourceNotFoundException(ExceptionDetailType.UserDoesNotExist);
             }
 
             return new UserAccountDto
@@ -37,7 +38,7 @@ namespace Server.Services
 
             if (entity == null)
             {
-                throw new ResourceNotFoundException("User account does not exist");
+                throw new ResourceNotFoundException(ExceptionDetailType.UserDoesNotExist);
             }
 
             return new UserAccountDto

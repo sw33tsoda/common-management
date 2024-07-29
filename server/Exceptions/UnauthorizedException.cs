@@ -3,9 +3,22 @@ using Server.Enums;
 
 namespace Server.Exceptions
 {
-    public class UnauthorizedException(string message = ExceptionMessage.Unauthorized) : ServerException(message)
+    public class UnauthorizedException : ServerException
     {
-        public override RequestErrorType Type { get; set; } = RequestErrorType.Unauthorized;
+        public override ExceptionType Type { get; set; } = ExceptionType.Unauthorized;
         public override int StatusCode { get; set; } = StatusCodes.Status401Unauthorized;
+
+        public UnauthorizedException(string message = CommonExceptionMessage.ServerError) : base(message)
+        {
+        }
+
+        public UnauthorizedException(ExceptionDetailType detailType) : base(detailType switch
+        {
+            ExceptionDetailType.WrongPassword => UnauthorizedExceptionMessage.WrongPassword,
+            _ => CommonExceptionMessage.ServerError,
+        })
+        {
+            DetailType = detailType;
+        }
     }
 }
