@@ -31,13 +31,18 @@ const apiFetchErrorHandler = (error: IServerExceptionResponseDto<unknown>) => {
             return dtoValidateErrorHandler(error as IServerExceptionResponseDto<Array<IValidationResult>>);
 
         default:
-            return;
+            return commonErrorHandler(error as IServerExceptionResponseDto);
     }
 
     return;
 };
 
 const dtoValidateErrorHandler = (error: IServerExceptionResponseDto<Array<IValidationResult>>) => {
+    // TODO:
+    return error;
+};
+
+const commonErrorHandler = (error: IServerExceptionResponseDto) => {
     // TODO:
     return error;
 };
