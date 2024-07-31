@@ -16,6 +16,7 @@ import { type TGlobalThisHelpersProperty } from './misc';
         clear: () => localStorage.clear(),
     },
     cloneDeep: (object) => JSON.parse(JSON.stringify(object)),
+    getType: (object) => Object.prototype.toString.call(object),
 };
 
 /**

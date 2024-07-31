@@ -1,3 +1,5 @@
+import { DataType } from '../../enums';
+
 declare global {
     const $$: IGlobalThisHelpers;
     interface String extends IStringPrototypeHelpers {}
@@ -16,6 +18,7 @@ interface IGlobalThisHelpers {
         clear: () => void;
     };
     cloneDeep: (obj: object) => object;
+    getType: (obj: any) => string;
 }
 
 interface IStringPrototypeHelpers {
@@ -31,9 +34,7 @@ interface INumberPrototypeHelpers {
 }
 
 interface IArrayPrototypeHelpers<T> {
-    getLength(
-        callback?: (value: T, index?: number | undefined, array?: T[] | undefined) => boolean,
-    ): number;
+    getLength(callback?: (value: T, index?: number | undefined, array?: T[] | undefined) => boolean): number;
 }
 
 interface IObjectPrototypeHelpers {}
