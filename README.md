@@ -1,1 +1,1 @@
-this project simply contains boilerplate codes
+this project contains boilerplate code which are being written by Javascript and React
