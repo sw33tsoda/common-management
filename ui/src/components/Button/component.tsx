@@ -7,9 +7,14 @@ import {
 } from './misc';
 import { createClassNames } from '../../helpers/common';
 
-const withLogic: TButtonComponentWithLogic = ({ additionalClassNames = '', variant = ButtonVariant.Plain }) => {
+const withLogic: TButtonComponentWithLogic = ({
+    additionalClassNames = '',
+    variant = ButtonVariant.Plain,
+    children,
+}) => {
     const alteredProps: TButtonComponentHtmlElementAttributes = {
         className: createClassNames(['button', (base) => base + '--' + variant, additionalClassNames]),
+        children,
     };
 
     return { alteredProps };
