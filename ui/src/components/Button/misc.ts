@@ -1,4 +1,4 @@
-import { ButtonHTMLAttributes, ForwardedRef } from 'react';
+import { ButtonHTMLAttributes, ForwardedRef, ReactNode } from 'react';
 
 type TButtonComponentHtmlElementAttributes = ButtonHTMLAttributes<HTMLElement>;
 
@@ -15,6 +15,7 @@ type TButtonComponentAcceptedProps = Pick<TButtonComponentHtmlElementAttributes,
 interface IButtonProps extends TButtonComponentAcceptedProps {
     additionalClassNames?: string;
     variant?: ButtonVariant;
+    children?: ReactNode;
 }
 
 type TButtonForwardRef = ForwardedRef<HTMLButtonElement>;
