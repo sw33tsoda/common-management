@@ -1,0 +1,66 @@
+@use '../functions' as fn;
+
+$component-class-name: '.button';
+
+#{$component-class-name} {
+    border: 0;
+    padding: 0.25em 0.5em;
+    border-radius: 0.25em;
+    background: none;
+    border-width: 1px;
+    border-style: solid;
+    border-color: fn.get-color(transparent);
+    font-weight: 500;
+    cursor: pointer;
+
+    &--solid {
+        &#{$component-class-name}--primary {
+            background: fn.get-color(primary);
+            border-color: fn.get-color(primary);
+            color: fn.get-color(white);
+        }
+
+        &#{$component-class-name}--warning {
+            background: fn.get-color(warning);
+            border-color: fn.get-color(warning);
+            color: fn.get-color(white);
+        }
+
+        &#{$component-class-name}--danger {
+            background: fn.get-color(danger);
+            border-color: fn.get-color(danger);
+            color: fn.get-color(white);
+        }
+    }
+
+    &--plain {
+        &#{$component-class-name}--primary {
+            color: fn.get-color(primary);
+        }
+
+        &#{$component-class-name}--warning {
+            color: fn.get-color(warning);
+        }
+
+        &#{$component-class-name}--danger {
+            color: fn.get-color(danger);
+        }
+    }
+
+    &--outlined {
+        &#{$component-class-name}--primary {
+            border-color: fn.get-color(primary);
+            color: fn.get-color(primary);
+        }
+
+        &#{$component-class-name}--warning {
+            border-color: fn.get-color(warning);
+            color: fn.get-color(warning);
+        }
+
+        &#{$component-class-name}--danger {
+            border-color: fn.get-color(danger);
+            color: fn.get-color(danger);
+        }
+    }
+}

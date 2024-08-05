@@ -15,6 +15,7 @@ type TButtonComponentAcceptedProps = Pick<TButtonComponentHtmlElementAttributes,
 interface IButtonProps extends TButtonComponentAcceptedProps {
     additionalClassNames?: string;
     variant?: ButtonVariant;
+    color?: ButtonColor;
     children?: ReactNode;
 }
 
@@ -26,10 +27,17 @@ enum ButtonVariant {
     Solid = 'solid',
 }
 
+enum ButtonColor {
+    Primary = 'primary',
+    Danger = 'danger',
+    Warning = 'warning',
+}
+
 export {
     type IButtonProps,
     type TButtonForwardRef,
     type TButtonComponentWithLogic,
     type TButtonComponentHtmlElementAttributes,
     ButtonVariant,
+    ButtonColor,
 };

@@ -1,3 +1,12 @@
 $font: (
     global: "Roboto"
 );
+
+$color: (
+    primary: #007FFF,
+    warning: #FFD700,
+    success: #87D300,
+    danger: #FF3533,
+    transparent: rgba(0,0,0,0),
+    white: white,
+)

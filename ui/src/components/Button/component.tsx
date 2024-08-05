@@ -4,16 +4,23 @@ import {
     type TButtonComponentWithLogic,
     type TButtonComponentHtmlElementAttributes,
     ButtonVariant,
+    ButtonColor,
 } from './misc';
 import { createClassNames } from '../../helpers/common';
 
 const withLogic: TButtonComponentWithLogic = ({
     additionalClassNames = '',
     variant = ButtonVariant.Plain,
+    color = ButtonColor.Primary,
     children,
 }) => {
     const alteredProps: TButtonComponentHtmlElementAttributes = {
-        className: createClassNames(['button', (base) => base + '--' + variant, additionalClassNames]),
+        className: createClassNames([
+            'button',
+            (base) => base + '--' + variant,
+            (base) => base + '--' + color,
+            additionalClassNames,
+        ]),
         children,
     };
 
