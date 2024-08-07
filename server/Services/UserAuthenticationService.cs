@@ -3,6 +3,8 @@ using Server.Dtos;
 using Server.Enums;
 using Server.Entities;
 using Server.Exceptions;
+using Newtonsoft.Json;
+using Server.Models;
 
 namespace Server.Services
 {
@@ -47,14 +49,18 @@ namespace Server.Services
 
         public async Task<RegisterResponseDto> Register(RegisterParamsDto registerParamsDto)
         {
+            var userPermissions = _userService.GetUserBasicPermissionsForNewMember();
             var addedUserAccountEntity = await _userService.AddUserAccount(new UserAccountEntity
             {
                 Email = registerParamsDto.Email,
                 Password = BCrypt.Net.BCrypt.HashPassword(registerParamsDto.Password),
-                UserRole = UserRole.Anonymous,
+                UserRole = UserRole.Member,
                 CreatedAt = DateTime.UtcNow,
-                ModifiedAt = DateTime.UtcNow
+                ModifiedAt = DateTime.UtcNow,
+                UserPermissions = JsonConvert.SerializeObject(userPermissions)
             });
+
+            var a = JsonConvert.DeserializeObject<ResourcePermission>(addedUserAccountEntity.UserPermissions);
             ArgumentNullException.ThrowIfNull(addedUserAccountEntity);
             var addedUserProfileEntity = await _userService.AddUserProfile(new UserProfileEntity
             {

@@ -3,6 +3,7 @@ using Server.Interfaces;
 using Server.Dtos;
 using Server.Exceptions;
 using Server.Enums;
+using Server.Models;
 
 namespace Server.Services
 {
@@ -47,6 +48,18 @@ namespace Server.Services
                 Email = entity.Email,
                 Password = entity.Password
             };
+        }
+
+        public ResourcePermission GetUserBasicPermissionsForNewMember()
+        {
+            var systemResourcePermission = new SystemResourcePermission().GetTree();
+            systemResourcePermission.AllowView = true;
+            systemResourcePermission.ChildPermission[ResourcePermissionId.UserAccountPermission].AllowView = true;
+            systemResourcePermission.ChildPermission[ResourcePermissionId.UserAccountPermission].AllowUpdate = true;
+            systemResourcePermission.ChildPermission[ResourcePermissionId.UserAccountPermission].ChildPermission[ResourcePermissionId.UserAccountPasswordPermission].AllowView = true;
+            systemResourcePermission.ChildPermission[ResourcePermissionId.UserAccountPermission].ChildPermission[ResourcePermissionId.UserAccountPasswordPermission].AllowUpdate = true;
+
+            return systemResourcePermission;
         }
 
         public async Task<UserAccountEntity> AddUserAccount(UserAccountEntity userAccountEntity)
