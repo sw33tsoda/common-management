@@ -16,6 +16,7 @@ interface IButtonProps extends TButtonComponentAcceptedProps {
     additionalClassNames?: string;
     variant?: ButtonVariant;
     color?: ButtonColor;
+    size?: ButtonSize;
     children?: ReactNode;
 }
 
@@ -33,6 +34,12 @@ enum ButtonColor {
     Warning = 'warning',
 }
 
+enum ButtonSize {
+    Small = 'small',
+    Medium = 'medium',
+    Large = 'large',
+}
+
 export {
     type IButtonProps,
     type TButtonForwardRef,
@@ -40,4 +47,5 @@ export {
     type TButtonComponentHtmlElementAttributes,
     ButtonVariant,
     ButtonColor,
+    ButtonSize,
 };
