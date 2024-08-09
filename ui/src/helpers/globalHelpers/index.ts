@@ -15,6 +15,20 @@ import { type TGlobalThisHelpersProperty } from './misc';
         getByIndex: (key) => localStorage.key(key) ?? '',
         clear: () => localStorage.clear(),
     },
+    cookie: {
+        getAccessToken: () => {
+            let token = '';
+            const cookies = document.cookie.split('; ');
+            if (cookies.length) {
+                const cookieKey = import.meta.env.VITE_COOKIE_KEY;
+                const cookie = cookies.find((cookie) => cookie.includes(cookieKey));
+                if (cookie) {
+                    [, token] = cookie.split('=');
+                }
+            }
+            return token;
+        },
+    },
     cloneDeep: (object) => JSON.parse(JSON.stringify(object)),
     getType: (object) => Object.prototype.toString.call(object),
 };

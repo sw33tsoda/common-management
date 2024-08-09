@@ -8,7 +8,7 @@ namespace Server.Exceptions
         public override ExceptionType Type { get; set; } = ExceptionType.Unauthorized;
         public override int StatusCode { get; set; } = StatusCodes.Status401Unauthorized;
 
-        public UnauthorizedException(string message = CommonExceptionMessage.ServerError) : base(message)
+        public UnauthorizedException(string message = CommonExceptionMessage.Unauthorized) : base(message)
         {
         }
 

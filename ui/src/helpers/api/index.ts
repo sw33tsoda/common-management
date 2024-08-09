@@ -9,19 +9,25 @@ import {
 
 const apiFetchHandler: TApiFetchHandler = async ({ url, method, params }) => {
     try {
-        const response = await fetch('http://localhost:5053/api' + url, {
+        const requestInit: RequestInit = {
             method,
-            body: JSON.stringify(params),
             headers: {
-                'Content-Type': 'application/json',
+                ['Content-Type']: 'application/json',
+                ['Authorization']: `Bearer ${$$.cookie.getAccessToken()}`,
             },
             credentials: 'include',
-        });
+        };
+
+        if (method !== HttpRequestMethods.GET) {
+            requestInit.body = JSON.stringify(params);
+        }
+
+        const response = await fetch('http://localhost:5053/api' + url, requestInit);
         const data = await response.json();
 
         return response.ok ? data : apiFetchErrorHandler(data);
-    } catch {
-        console.log('An unknown error has occured during fetching API.');
+    } catch (e) {
+        console.log('An unknown error has occured during fetching API.', e);
     }
 };
 

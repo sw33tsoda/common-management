@@ -34,7 +34,6 @@ namespace Server.Controllers
             {
                 Expires = DateTimeOffset.UtcNow.AddMinutes(_jwtOptions.Value.Expires),
                 Secure = true,
-                HttpOnly = true,
                 SameSite = SameSiteMode.Strict
             });
 
@@ -47,5 +46,13 @@ namespace Server.Controllers
         {
             return await _userAuthenticationService.Register(registerParamsDto);
         }
+
+        [Authorize]
+        [HttpPost("api-test")]
+        public async Task<RegisterResponseDto> ApiTest(RegisterParamsDto registerParamsDto)
+        {
+            return new RegisterResponseDto();
+        }
+
     }
 }

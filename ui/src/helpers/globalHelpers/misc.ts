@@ -1,5 +1,3 @@
-import { DataType } from '../../enums';
-
 declare global {
     const $$: IGlobalThisHelpers;
     interface String extends IStringPrototypeHelpers {}
@@ -16,6 +14,9 @@ interface IGlobalThisHelpers {
         remove: (key: string) => void;
         getByIndex: (key: number) => string;
         clear: () => void;
+    };
+    cookie: {
+        getAccessToken: () => string;
     };
     cloneDeep: (obj: object) => object;
     getType: (obj: any) => string;

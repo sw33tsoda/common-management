@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Newtonsoft.Json;
 using Server.Dtos;
 using Server.Exceptions;
@@ -20,6 +21,20 @@ namespace Server.Middlewares
             try
             {
                 await _next(context);
+
+                // TODO: Need refactor
+                var endpoint = context.GetEndpoint();
+                if (endpoint != null)
+                {
+                    var authorizeMetadata = endpoint.Metadata.GetMetadata<IAuthorizeData>();
+
+                    if (authorizeMetadata != null && !context.User.Identity.IsAuthenticated)
+                    {
+                        var serverException = new UnauthorizedException();
+                        HandleLogException(serverException.CorrelationId, serverException.Message);
+                        await HandleExceptionAsync(context, serverException);
+                    }
+                }
             }
             catch (ServerException exception)
             {
@@ -35,7 +50,7 @@ namespace Server.Middlewares
             }
         }
 
-        private async Task HandleExceptionAsync<E>(HttpContext context, E exception) where E : ServerException
+        private static async Task HandleExceptionAsync<E>(HttpContext context, E exception) where E : ServerException
         {
             context.Response.StatusCode = exception.StatusCode;
             context.Response.ContentType = "application/json";

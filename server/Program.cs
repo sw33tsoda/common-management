@@ -91,10 +91,10 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseCors("AllowLocalhost");
-app.UseAuthentication();
-app.UseAuthorization();
 app.UseMiddleware<ErrorHandlerMiddleware>();
 app.UseMiddleware<DtoValidationMiddleware>();
+app.UseAuthentication();
+app.UseAuthorization();
 app.UseHttpsRedirection();
 app.MapControllers();
 

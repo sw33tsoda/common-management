@@ -1,5 +1,6 @@
 import { Button, ButtonColor, ButtonVariant } from './components';
 import { Loading } from './components/Loading';
+import { api } from './helpers';
 import { userAuthenticationService } from './services';
 
 const App = () => {
@@ -13,8 +14,23 @@ const App = () => {
         $$.loadingAnimation(false);
     };
 
+    const getToken = () => {
+        console.log($$.cookie.getAccessToken());
+    };
+
+    const test = () => {
+        api.post('/auth/api-test', {
+            email: 'user@example.com',
+            password: 'string',
+        }).then((data) => {
+            console.log(data);
+        });
+    };
+
     return (
         <div className='app'>
+            <button onClick={getToken}>click to test token</button>
+            <button onClick={test}>click to test api</button>
             <Button variant={ButtonVariant.Outlined}>Happy</Button>
             <Button variant={ButtonVariant.Plain}>New</Button>
             <Button variant={ButtonVariant.Solid}>Year</Button>
