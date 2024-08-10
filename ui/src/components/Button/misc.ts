@@ -1,4 +1,4 @@
-import { ButtonHTMLAttributes, ForwardedRef, ReactNode } from 'react';
+import { ButtonHTMLAttributes, ForwardedRef } from 'react';
 
 type TButtonComponentHtmlElementAttributes = ButtonHTMLAttributes<HTMLElement>;
 
@@ -8,7 +8,7 @@ type TButtonComponentWithLogicReturnType = {
 
 type TButtonComponentWithLogic = (originalProps: IButtonProps) => TButtonComponentWithLogicReturnType;
 
-type TButtonComponentAllowedProps = 'value' | 'type' | 'children';
+type TButtonComponentAllowedProps = 'value' | 'type' | 'children' | 'onClick';
 
 type TButtonComponentAcceptedProps = Pick<TButtonComponentHtmlElementAttributes, TButtonComponentAllowedProps>;
 
@@ -17,7 +17,6 @@ interface IButtonProps extends TButtonComponentAcceptedProps {
     variant?: ButtonVariant;
     color?: ButtonColor;
     size?: ButtonSize;
-    children?: ReactNode;
 }
 
 type TButtonForwardRef = ForwardedRef<HTMLButtonElement>;
