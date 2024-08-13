@@ -1,4 +1,4 @@
-import { Button, ButtonColor, ButtonVariant } from './components';
+import { Button, ButtonColor, ButtonVariant, TextInput, TextInputSize, TextInputVariant } from './components';
 import { Loading } from './components/Loading';
 import { api } from './helpers';
 import { userAuthenticationService } from './services';
@@ -33,6 +33,52 @@ const App = () => {
             <button onClick={test}>click to test api</button>
             <button onClick={callApi}>call api</button>
             <Loading />
+
+            <br />
+            <br />
+            <TextInput placeholder='Please enter password' size={TextInputSize.Small} />
+            <br />
+            <br />
+            <TextInput placeholder='Please enter password' />
+            <br />
+            <br />
+            <TextInput placeholder='Please enter password' size={TextInputSize.Large} />
+
+            <br />
+            <br />
+            <TextInput
+                placeholder='Please enter password'
+                size={TextInputSize.Small}
+                variant={TextInputVariant.Outlined}
+            />
+            <br />
+            <br />
+            <TextInput placeholder='Please enter password' variant={TextInputVariant.Outlined} />
+            <br />
+            <br />
+            <TextInput
+                placeholder='Please enter password'
+                size={TextInputSize.Large}
+                variant={TextInputVariant.Outlined}
+            />
+
+            <br />
+            <br />
+            <TextInput
+                placeholder='Please enter password'
+                size={TextInputSize.Small}
+                variant={TextInputVariant.Solid}
+            />
+            <br />
+            <br />
+            <TextInput placeholder='Please enter password' variant={TextInputVariant.Solid} />
+            <br />
+            <br />
+            <TextInput
+                placeholder='Please enter password'
+                size={TextInputSize.Large}
+                variant={TextInputVariant.Solid}
+            />
         </div>
     );
 };

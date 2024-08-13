@@ -1,0 +1,49 @@
+@use '../functions' as fn;
+
+$component-class-name: '.text-input';
+
+#{$component-class-name} {
+    padding: 0.25em 0.5em;
+    border-radius: 0.5em;
+    border: none;
+    
+    &:focus {
+        outline: none;
+    }
+
+    &::placeholder {
+        transition: 0.15s ease;
+    }
+
+    &:focus::placeholder {
+        opacity: 0;
+    }
+
+    &:hover {
+
+    }
+
+    &--medium {
+        padding: 0.5rem 0.5rem;
+    }
+
+    &--large {
+        padding: 0.75rem 0.75rem;
+        font-size: 1rem;
+    }
+
+    &--plain {
+        
+    }
+
+    &--outlined {
+        border: 1px solid #EEEEEE;
+        &:focus {
+          border-color: fn.get-color(warning)
+        }
+    }
+
+    &--solid {
+        background: #EEEEEE;
+    }
+}
