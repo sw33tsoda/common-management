@@ -16,6 +16,8 @@ interface ITextInputProps extends TTextInputComponentAcceptedProps {
     additionalClassNames?: string;
     variant?: TextInputVariant;
     size?: TextInputSize;
+    error?: boolean;
+    errorMessage?: string;
 }
 
 type TTextInputForwardRef = ForwardedRef<HTMLInputElement>;

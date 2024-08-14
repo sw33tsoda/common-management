@@ -12,7 +12,9 @@ const withLogic: TTextInputComponentWithLogic = ({
     additionalClassNames = '',
     variant = TextInputVariant.Plain,
     size = TextInputSize.Medium,
-    placeholder,
+    placeholder = '',
+    error = false,
+    errorMessage = '',
     onChange,
 }) => {
     const alteredProps: TTextInputComponentHtmlElementAttributes = {
@@ -20,6 +22,7 @@ const withLogic: TTextInputComponentWithLogic = ({
             'text-input',
             (base) => base + '--' + variant,
             (base) => base + '--' + size,
+            (base) => (error ? base + '--error' : ''),
             additionalClassNames,
         ]),
         placeholder,

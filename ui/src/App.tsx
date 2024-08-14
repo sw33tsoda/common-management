@@ -61,6 +61,14 @@ const App = () => {
                 size={TextInputSize.Large}
                 variant={TextInputVariant.Outlined}
             />
+            <br />
+            <br />
+            <TextInput
+                placeholder='Please enter password'
+                size={TextInputSize.Large}
+                variant={TextInputVariant.Outlined}
+                error
+            />
 
             <br />
             <br />

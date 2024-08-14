@@ -1,11 +1,21 @@
 @use '../functions' as fn;
 
 $component-class-name: '.text-input';
+$medium-size: (
+    x: 0.5rem,
+    y: 0.5rem,
+);
+$large-size:(
+    x: 0.75rem,
+    y: 0.75rem
+);
+$border-width: 1px;
 
 #{$component-class-name} {
     padding: 0.25em 0.5em;
     border-radius: 0.5em;
     border: none;
+    background-color: fn.get-color(white);
     
     &:focus {
         outline: none;
@@ -24,11 +34,11 @@ $component-class-name: '.text-input';
     }
 
     &--medium {
-        padding: 0.5rem 0.5rem;
+        padding: map-get($medium-size, x) map-get($medium-size, y);
     }
 
     &--large {
-        padding: 0.75rem 0.75rem;
+        padding: map-get($large-size, x) map-get($large-size, y);
         font-size: 1rem;
     }
 
@@ -37,13 +47,29 @@ $component-class-name: '.text-input';
     }
 
     &--outlined {
-        border: 1px solid #EEEEEE;
+        border: $border-width solid fn.get-color(brightGrey);
+
+        // Shrink 1px if its size is medium
+        &#{$component-class-name}--medium {
+            padding: calc(map-get($medium-size, x) - $border-width) calc(map-get($medium-size, y) - $border-width);
+        }
+
+        // Shrink 1px if its size is large
+        &#{$component-class-name}--large {
+            padding: calc(map-get($large-size, x) - $border-width) calc(map-get($large-size, y) - $border-width);
+        }
+
+        // Paint border color if it's error
+        &#{$component-class-name}--error {
+            border-color: fn.get-color(danger);
+        }
+
         &:focus {
           border-color: fn.get-color(warning)
         }
     }
 
     &--solid {
-        background: #EEEEEE;
+        background: fn.get-color(brightGrey);
     }
 }
