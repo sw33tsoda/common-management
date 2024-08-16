@@ -1,15 +1,16 @@
-this project contains boilerplate code which are being written by javascript and c#
+# common-management
 
-techstack
-  fe:
-    - react
-    - redux
-    - vite
-    - vitest (unit test)
-    - sass
-  be:
-    - asp.net (web api)
-    - entity framework
-    - postgresql
-    - jwt auth
-    
+## Tech Stack
+
+### Frontend
+- **React**: A JavaScript library for building user interfaces.
+- **Redux**: A predictable state container for JavaScript apps.
+- **Vite**: A fast and opinionated build tool for modern web projects.
+- **Vitest**: A blazing-fast unit testing framework powered by Vite.
+- **Sass**: A powerful CSS preprocessor for enhanced styling capabilities.
+
+### Backend
+- **ASP.NET (Web API)**: A framework for building RESTful services with .NET.
+- **Entity Framework**: An ORM (Object-Relational Mapper) for working with databases using .NET.
+- **PostgreSQL**: A powerful, open-source object-relational database system.
+- **JWT Auth**: JSON Web Token-based authentication for secure API access.
