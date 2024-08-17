@@ -1,13 +1,23 @@
 $font: (
-    global: "Roboto"
+    global: 'Roboto',
 );
 
 $color: (
-    primary: #007FFF,
-    warning: #FFD700,
-    success: #87D300,
-    danger: #FF3533,
-    transparent: rgba(0,0,0,0),
+    primary: #007fff,
+    warning: #ffd700,
+    success: #87d300,
+    danger: #ff3533,
+    transparent: rgba(0, 0, 0, 0),
     white: white,
-    brightGrey: #EEEEEE,
-)
+    brightGrey: #eeeeee,
+);
+
+$tranparent-color: (
+    veryLightBlack: rgba(0, 0, 0, 0.16),
+);
+
+$shadow-thickness: (
+    small: 0rem 0.0625rem 0.25rem,
+    medium: 0rem 0.125rem 0.5rem,
+    large: 0rem 0.25rem 1rem,
+);

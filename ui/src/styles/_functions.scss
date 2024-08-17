@@ -1,4 +1,4 @@
-@use "variables" as var;
+@use 'variables' as var;
 
 @function get-font($key) {
     @return map-get(var.$font, $key);
@@ -6,4 +6,16 @@
 
 @function get-color($key) {
     @return map-get(var.$color, $key);
+}
+
+@function get-transparent-color($key) {
+    @return map-get(var.$tranparent-color, $key);
+}
+
+@function get-shadow-thickness($key) {
+    @return map-get(var.$shadow-thickness, $key);
+}
+
+@function get-shadow($color: get-transparent-color(veryLightBlack), $thickness: get-shadow-thickness(small)) {
+    @return $color get-shadow-thickness($thickness);
 }

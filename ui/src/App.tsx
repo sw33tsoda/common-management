@@ -1,6 +1,7 @@
 import { Button, ButtonColor, ButtonVariant, TextInput, TextInputSize, TextInputVariant } from './components';
 import { Loading } from './components/Loading';
 import { api } from './helpers';
+import { createClassNames } from './helpers/common';
 import { userAuthenticationService } from './services';
 
 const App = () => {
@@ -39,10 +40,20 @@ const App = () => {
             <TextInput placeholder='Please enter password' size={TextInputSize.Small} />
             <br />
             <br />
+            <TextInput placeholder='Please enter password' size={TextInputSize.Small} error />
+
+            <br />
+            <br />
             <TextInput placeholder='Please enter password' />
             <br />
             <br />
+            <TextInput placeholder='Please enter password' error />
+            <br />
+            <br />
             <TextInput placeholder='Please enter password' size={TextInputSize.Large} />
+            <br />
+            <br />
+            <TextInput placeholder='Please enter password' size={TextInputSize.Large} error />
 
             <br />
             <br />
@@ -53,7 +64,18 @@ const App = () => {
             />
             <br />
             <br />
+            <TextInput
+                placeholder='Please enter password'
+                size={TextInputSize.Small}
+                variant={TextInputVariant.Outlined}
+                error
+            />
+            <br />
+            <br />
             <TextInput placeholder='Please enter password' variant={TextInputVariant.Outlined} />
+            <br />
+            <br />
+            <TextInput placeholder='Please enter password' variant={TextInputVariant.Outlined} error />
             <br />
             <br />
             <TextInput
@@ -79,13 +101,33 @@ const App = () => {
             />
             <br />
             <br />
+            <TextInput
+                placeholder='Please enter password'
+                size={TextInputSize.Small}
+                variant={TextInputVariant.Solid}
+                error
+            />
+            <br />
+            <br />
             <TextInput placeholder='Please enter password' variant={TextInputVariant.Solid} />
+            <br />
+            <br />
+            <TextInput placeholder='Please enter password' variant={TextInputVariant.Solid} error />
             <br />
             <br />
             <TextInput
                 placeholder='Please enter password'
                 size={TextInputSize.Large}
                 variant={TextInputVariant.Solid}
+            />
+
+            <br />
+            <br />
+            <TextInput
+                placeholder='Please enter password'
+                size={TextInputSize.Large}
+                variant={TextInputVariant.Solid}
+                error
             />
         </div>
     );
