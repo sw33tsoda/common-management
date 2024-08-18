@@ -1,7 +1,7 @@
-import { Button, ButtonColor, ButtonVariant, TextInput, TextInputSize, TextInputVariant } from './components';
+import { Outlet } from 'react-router-dom';
+import { TextInput, TextInputSize, TextInputVariant } from './components';
 import { Loading } from './components/Loading';
 import { api } from './helpers';
-import { createClassNames } from './helpers/common';
 import { userAuthenticationService } from './services';
 
 const App = () => {
@@ -30,6 +30,12 @@ const App = () => {
 
     return (
         <div className='app'>
+            <Outlet />
+
+            <br />
+            <br />
+            <br />
+
             <button onClick={getToken}>click to test token</button>
             <button onClick={test}>click to test api</button>
             <button onClick={callApi}>call api</button>

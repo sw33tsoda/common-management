@@ -14,7 +14,6 @@ const withLogic: TTextInputComponentWithLogic = ({
     size = TextInputSize.Medium,
     placeholder = '',
     error = false,
-    errorMessage = '',
     onChange,
 }) => {
     const alteredProps: TTextInputComponentHtmlElementAttributes = {
