@@ -1,0 +1,17 @@
+@use '../functions' as fn;
+
+$component-class-name: '.text';
+
+#{$component-class-name} {
+    &--small {
+        font-size: 0.75rem;
+    }
+
+    &--medium {
+        font-size: 1rem;
+    }
+
+    &--large {
+        font-size: 1.25rem;
+    }
+}

@@ -15,6 +15,7 @@ const withLogic: TButtonComponentWithLogic = ({
     color = ButtonColor.Primary,
     size = ButtonSize.Medium,
     onClick,
+    children,
 }) => {
     const alteredProps: TButtonComponentHtmlElementAttributes = {
         className: createClassNames([
@@ -25,6 +26,7 @@ const withLogic: TButtonComponentWithLogic = ({
             additionalClassNames,
         ]),
         onClick,
+        children,
     };
 
     return { alteredProps };

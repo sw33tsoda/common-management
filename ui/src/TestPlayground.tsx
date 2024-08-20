@@ -1,4 +1,4 @@
-import { Loading, TextInput, TextInputSize, TextInputVariant } from './components';
+import { Button, Loading, Text, TextInput, TextInputSize, TextInputVariant, TextSize } from './components';
 import { api } from './helpers/api';
 import { userAuthenticationService } from './services';
 
@@ -28,6 +28,12 @@ const TestPlayground = () => {
 
     return (
         <>
+            <Text size={TextSize.Small}>Are you good?</Text>
+            <Text>Are you good?</Text>
+            <Text size={TextSize.Large}>Are you good?</Text>
+
+            <Button>ABC</Button>
+
             <br />
             <br />
             <br />
