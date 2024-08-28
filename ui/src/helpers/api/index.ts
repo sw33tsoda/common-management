@@ -7,20 +7,20 @@ import {
     type TApiFetchHandler,
 } from './misc';
 
-const apiFetchHandler: TApiFetchHandler = async ({ url, method, params }) => {
+const apiFetchHandler: TApiFetchHandler = async ({ url, method, params, abort }) => {
     try {
-        const requestInit: RequestInit = {
-            method,
-            headers: {
-                ['Content-Type']: 'application/json',
-                ['Authorization']: `Bearer ${$$.cookie.getAccessToken()}`,
-            },
-            credentials: 'include',
-        };
+        const requestInit: RequestInit = {};
+        const headers = new Headers();
+        abort = new AbortController();
 
-        if (method !== HttpRequestMethods.GET) {
-            requestInit.body = JSON.stringify(params);
-        }
+        headers.append('Content-Type', 'application/json');
+        headers.append('Authorization', `Bearer ${$$.cookie.getAccessToken()}`);
+        requestInit.method = method;
+        requestInit.headers = headers;
+        requestInit.credentials = 'include';
+        requestInit.signal = abort.signal;
+
+        if (method !== HttpRequestMethods.GET) requestInit.body = JSON.stringify(params);
 
         const response = await fetch('http://localhost:5053/api' + url, requestInit);
         const data = await response.json();

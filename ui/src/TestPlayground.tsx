@@ -1,14 +1,19 @@
+import { useRef } from 'react';
 import { Button, Loading, Text, TextInput, TextInputSize, TextInputVariant, TextSize } from './components';
 import { api } from './helpers/api';
 import { userAuthenticationService } from './services';
 
 const TestPlayground = () => {
+    const loginServiceToken = useRef(null);
+
     const callApi = async () => {
         $$.loadingAnimation(true);
         const data = await userAuthenticationService.login({
             email: 'sw33tsoda@gmail.com',
             password: 'K9n6sgmv',
         });
+
+        console.log(data);
 
         $$.loadingAnimation(false);
     };

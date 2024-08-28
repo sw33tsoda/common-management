@@ -1,6 +1,8 @@
+import { TApiFetchHandlerReturnType } from '../helpers/api/misc';
+
 interface IUserAuthenticationService {
-    register: (params: IRegisterParamsDto) => Promise<IRegisterResponseDto>;
-    login: (params: ILoginParamsDto) => Promise<ILoginResponseDto>;
+    register: (params: IRegisterParamsDto) => TApiFetchHandlerReturnType<IRegisterResponseDto>;
+    login: (params: ILoginParamsDto) => TApiFetchHandlerReturnType<ILoginResponseDto>;
 }
 
 /**
