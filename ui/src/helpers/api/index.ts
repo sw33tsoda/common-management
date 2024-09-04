@@ -22,7 +22,7 @@ const apiFetchHandler: TApiFetchHandler = async ({ url, method, params, abort })
 
         if (method !== HttpRequestMethods.GET) requestInit.body = JSON.stringify(params);
 
-        const response = await fetch('http://localhost:5053/api' + url, requestInit);
+        const response = await fetch(import.meta.env.VITE_API_BASE_URL + url, requestInit);
         const data = await response.json();
 
         return response.ok ? data : apiFetchErrorHandler(data);
