@@ -1,38 +1,33 @@
-import { useRef } from 'react';
 import { Button, Loading, Text, TextInput, TextInputSize, TextInputVariant, TextSize } from './components';
-import { api } from './helpers/api';
+import { useAbortController } from './helpers';
 import { userAuthenticationService } from './services';
 
 const TestPlayground = () => {
-    const loginServiceToken = useRef(null);
+    const loginApiCancel = useAbortController();
 
     const callApi = async () => {
-        $$.loadingAnimation(true);
-        const data = await userAuthenticationService.login({
-            email: 'sw33tsoda@gmail.com',
-            password: 'K9n6sgmv',
-        });
+        const data = await userAuthenticationService.login(
+            {
+                email: 'sw33tsoda@gmail.com',
+                password: 'K9n6sgmv',
+            },
+            loginApiCancel.signal,
+        );
+        console.log('cancelling.');
+    };
 
-        console.log(data);
-
-        $$.loadingAnimation(false);
+    const handleCancelApi = () => {
+        loginApiCancel.abort('yeah');
     };
 
     const getToken = () => {
         console.log($$.cookie.getAccessToken());
     };
 
-    const test = () => {
-        api.post('/auth/api-test', {
-            email: 'user@example.com',
-            password: 'string',
-        }).then((data) => {
-            console.log(data);
-        });
-    };
-
     return (
         <>
+            <button onClick={handleCancelApi}>cancel api</button>
+
             <Text size={TextSize.Small}>Are you good?</Text>
             <Text>Are you good?</Text>
             <Text size={TextSize.Large}>Are you good?</Text>
@@ -44,7 +39,6 @@ const TestPlayground = () => {
             <br />
 
             <button onClick={getToken}>click to test token</button>
-            <button onClick={test}>click to test api</button>
             <button onClick={callApi}>call api</button>
             <Loading />
 

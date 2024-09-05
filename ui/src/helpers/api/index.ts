@@ -7,19 +7,18 @@ import {
     type TApiFetchHandler,
 } from './misc';
 
-const apiFetchHandler: TApiFetchHandler = async ({ url, method, params, abort }) => {
+const apiFetchHandler: TApiFetchHandler = async ({ url, method, params, signal }) => {
     try {
         const requestInit: RequestInit = {};
         const headers = new Headers();
-        abort = new AbortController();
 
         headers.append('Content-Type', 'application/json');
         headers.append('Authorization', `Bearer ${$$.cookie.getAccessToken()}`);
         requestInit.method = method;
         requestInit.headers = headers;
         requestInit.credentials = 'include';
-        requestInit.signal = abort.signal;
 
+        if (signal) requestInit.signal = signal;
         if (method !== HttpRequestMethods.GET) requestInit.body = JSON.stringify(params);
 
         const response = await fetch(import.meta.env.VITE_API_BASE_URL + url, requestInit);
@@ -54,11 +53,16 @@ const commonErrorHandler = (error: IServerExceptionResponseDto) => {
 };
 
 const api: IApiHelper = {
-    [HttpRequestMethods.GET]: (url, params) => apiFetchHandler({ url, params, method: HttpRequestMethods.GET }),
-    [HttpRequestMethods.POST]: (url, params) => apiFetchHandler({ url, params, method: HttpRequestMethods.POST }),
-    [HttpRequestMethods.PUT]: (url, params) => apiFetchHandler({ url, params, method: HttpRequestMethods.PUT }),
-    [HttpRequestMethods.PATCH]: (url, params) => apiFetchHandler({ url, params, method: HttpRequestMethods.PATCH }),
-    [HttpRequestMethods.DELETE]: (url, params) => apiFetchHandler({ url, params, method: HttpRequestMethods.DELETE }),
+    [HttpRequestMethods.GET]: ({ url, params, signal }) =>
+        apiFetchHandler({ url, params, method: HttpRequestMethods.GET, signal }),
+    [HttpRequestMethods.POST]: ({ url, params, signal }) =>
+        apiFetchHandler({ url, params, method: HttpRequestMethods.POST, signal }),
+    [HttpRequestMethods.PUT]: ({ url, params, signal }) =>
+        apiFetchHandler({ url, params, method: HttpRequestMethods.PUT, signal }),
+    [HttpRequestMethods.PATCH]: ({ url, params, signal }) =>
+        apiFetchHandler({ url, params, method: HttpRequestMethods.PATCH, signal }),
+    [HttpRequestMethods.DELETE]: ({ url, params, signal }) =>
+        apiFetchHandler({ url, params, method: HttpRequestMethods.DELETE, signal }),
 };
 
 export { api };

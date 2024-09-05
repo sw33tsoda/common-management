@@ -46,13 +46,5 @@ namespace Server.Controllers
         {
             return await _userAuthenticationService.Register(registerParamsDto);
         }
-
-        [Authorize]
-        [HttpPost("api-test")]
-        public async Task<RegisterResponseDto> ApiTest(RegisterParamsDto registerParamsDto)
-        {
-            return new RegisterResponseDto();
-        }
-
     }
 }

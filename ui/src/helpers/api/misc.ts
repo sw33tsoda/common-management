@@ -10,12 +10,16 @@ interface IFetchHelperParameters<P> {
     url: string;
     method: HttpRequestMethods;
     params: P;
-    abort: AbortController;
+    signal?: AbortSignal;
 }
 type TApiFetchHandlerReturnType<R> = Promise<R>;
 type TApiFetchHandler = <P, R>(parameter: IFetchHelperParameters<P>) => TApiFetchHandlerReturnType<R>;
-
-type IApiHelperImplementation = <P, R>(url: string, params: P) => TApiFetchHandlerReturnType<R>;
+interface IApiHelperImplementationParams<P> {
+    url: string;
+    params: P;
+    signal?: AbortSignal;
+}
+type IApiHelperImplementation = <P, R>(params: IApiHelperImplementationParams<P>) => TApiFetchHandlerReturnType<R>;
 
 interface IApiHelper extends Record<HttpRequestMethods, IApiHelperImplementation> {}
 

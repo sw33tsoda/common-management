@@ -1,8 +1,8 @@
 import { TApiFetchHandlerReturnType } from '../helpers/api/misc';
 
 interface IUserAuthenticationService {
-    register: (params: IRegisterParamsDto) => TApiFetchHandlerReturnType<IRegisterResponseDto>;
-    login: (params: ILoginParamsDto) => TApiFetchHandlerReturnType<ILoginResponseDto>;
+    register: (params: IRegisterParamsDto, token?: AbortSignal) => TApiFetchHandlerReturnType<IRegisterResponseDto>;
+    login: (params: ILoginParamsDto, token?: AbortSignal) => TApiFetchHandlerReturnType<ILoginResponseDto>;
 }
 
 /**
