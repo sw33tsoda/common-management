@@ -1,7 +1,8 @@
 @use "functions" as fn;
 
+
 * {
-    font-family: fn.get-font(global);
+    font-family: fn.get-font(global), sans-serif;
     padding: 0;
     margin: 0;
 }

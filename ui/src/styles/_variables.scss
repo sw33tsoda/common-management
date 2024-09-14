@@ -1,5 +1,5 @@
 $font: (
-    global: "Roboto",
+    global: 'Lexend Deca Variable',
 );
 
 $color: (
@@ -14,6 +14,12 @@ $color: (
 
 $tranparent-color: (
     veryLightBlack: rgba(0, 0, 0, 0.16),
+);
+
+$shadow-intensity: (
+    light: rgba(0, 0, 0, 0.16),
+    medium: rgba(0, 0, 0, 0.24),
+    large: rgba(0, 0, 0, 0.48),
 );
 
 $shadow-thickness: (

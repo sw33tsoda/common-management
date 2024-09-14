@@ -1,0 +1,10 @@
+@use 'functions' as fn;
+@use 'variables' as var;
+
+@mixin generate-box-shadow-modifier-classes($component-class-name, $intensities) {
+    @each $key, $value in $intensities {
+        &#{$component-class-name}--with-#{$key}-shadow {
+            box-shadow: $value;
+        }
+    }
+}

@@ -1,6 +1,6 @@
 import { ForwardedRef, InputHTMLAttributes } from 'react';
 
-type TTextInputComponentHtmlElementAttributes = InputHTMLAttributes<HTMLElement>;
+type TTextInputComponentHtmlElementAttributes = InputHTMLAttributes<HTMLInputElement>;
 
 type TTextInputComponentWithLogicReturnType = {
     alteredProps: TTextInputComponentHtmlElementAttributes;

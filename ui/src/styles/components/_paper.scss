@@ -1,0 +1,14 @@
+@use '../functions' as fn;
+@use '../mixins' as mx;
+
+$component-class-name: '.paper';
+
+$box-shadow-properties: (
+    light: fn.get-shadow(light, small),
+    medium: fn.get-shadow(medium, medium),
+    dark: fn.get-shadow(large, large),
+);
+
+#{$component-class-name} {
+    @include mx.generate-box-shadow-modifier-classes($component-class-name, $box-shadow-properties);
+}

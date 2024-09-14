@@ -1,6 +1,6 @@
 import { ButtonHTMLAttributes, ForwardedRef } from 'react';
 
-type TButtonComponentHtmlElementAttributes = ButtonHTMLAttributes<HTMLElement>;
+type TButtonComponentHtmlElementAttributes = ButtonHTMLAttributes<HTMLButtonElement>;
 
 type TButtonComponentWithLogicReturnType = {
     alteredProps: TButtonComponentHtmlElementAttributes;

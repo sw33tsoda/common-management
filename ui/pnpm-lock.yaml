@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@fontsource-variable/lexend-deca':
+        specifier: ^5.1.0
+        version: 5.1.0
       '@fontsource/roboto':
         specifier: ^5.0.13
         version: 5.0.13
@@ -237,6 +240,9 @@ packages:
   '@eslint/js@8.57.0':
     resolution: {integrity: sha512-Ys+3g2TaW7gADOJzPt83SJtCDhMjndcDMFVQ/Tj9iA1BfJzFKD9mAUXT3OenpuPHbI6P/myECxRJrofUsDx/5g==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+
+  '@fontsource-variable/lexend-deca@5.1.0':
+    resolution: {integrity: sha512-5PyCCyrsvGEnHFkos9VCoIwY9uS0xoHrP6/f2ICwrmSAq1TXemyYDFs+XD4Zs0AmpQv3mLy83+99qAY3RpC+UA==}
 
   '@fontsource/roboto@5.0.13':
     resolution: {integrity: sha512-j61DHjsdUCKMXSdNLTOxcG701FWnF0jcqNNQi2iPCDxU8seN/sMxeh62dC++UiagCWq9ghTypX+Pcy7kX+QOeQ==}
@@ -1436,6 +1442,8 @@ snapshots:
       - supports-color
 
   '@eslint/js@8.57.0': {}
+
+  '@fontsource-variable/lexend-deca@5.1.0': {}
 
   '@fontsource/roboto@5.0.13': {}
 

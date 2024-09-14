@@ -1,6 +1,6 @@
 import { ForwardedRef, HTMLAttributes } from 'react';
 
-type TTextComponentHtmlElementAttributes = HTMLAttributes<HTMLElement>;
+type TTextComponentHtmlElementAttributes = HTMLAttributes<HTMLParagraphElement>;
 
 type TTextComponentWithLogicReturnType = {
     alteredProps: TTextComponentHtmlElementAttributes;

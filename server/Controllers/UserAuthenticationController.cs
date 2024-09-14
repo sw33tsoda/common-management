@@ -5,7 +5,6 @@ using Server.Interfaces;
 using Server.Dtos;
 using Microsoft.Extensions.Options;
 using Server.Models;
-using Server.Enums;
 
 namespace Server.Controllers
 {

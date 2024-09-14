@@ -1,4 +1,14 @@
-import { Button, Loading, Text, TextInput, TextInputSize, TextInputVariant, TextSize } from './components';
+import {
+    Button,
+    Loading,
+    Paper,
+    PaperShadowIntensity,
+    Text,
+    TextInput,
+    TextInputSize,
+    TextInputVariant,
+    TextSize,
+} from './components';
 import { api, useAbortController } from './helpers';
 import { userAuthenticationService } from './services';
 
@@ -40,6 +50,17 @@ const TestPlayground = () => {
             <Text size={TextSize.Large}>Are you good?</Text>
 
             <Button>ABC</Button>
+
+            <br />
+            <br />
+
+            <Paper intensity={PaperShadowIntensity.Dark} children={<Text> Hello world </Text>} />
+            <br />
+            <br />
+            <Paper intensity={PaperShadowIntensity.Medium} children={<Text> Hello world </Text>} />
+            <br />
+            <br />
+            <Paper intensity={PaperShadowIntensity.Dark} children={<Text> Hello world </Text>} />
 
             <br />
             <br />

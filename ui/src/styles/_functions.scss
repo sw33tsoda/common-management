@@ -12,10 +12,15 @@
     @return map-get(var.$tranparent-color, $key);
 }
 
+@function get-shadow-intensity($key) {
+    @return map-get(var.$shadow-intensity, $key);
+}
+
 @function get-shadow-thickness($key) {
     @return map-get(var.$shadow-thickness, $key);
 }
 
-@function get-shadow($color: get-transparent-color(veryLightBlack), $thickness: get-shadow-thickness(small)) {
-    @return $color get-shadow-thickness($thickness);
+@function get-shadow($intensity: light, $thickness: small) {
+    @return get-shadow-intensity($intensity) get-shadow-thickness($thickness);
 }
+
