@@ -1,5 +1,5 @@
 import { Button, Loading, Text, TextInput, TextInputSize, TextInputVariant, TextSize } from './components';
-import { useAbortController } from './helpers';
+import { api, useAbortController } from './helpers';
 import { userAuthenticationService } from './services';
 
 const TestPlayground = () => {
@@ -8,7 +8,7 @@ const TestPlayground = () => {
     const callApi = async () => {
         const data = await userAuthenticationService.login(
             {
-                email: 'sw33tsoda@gmail.com',
+                email: 'kyle.vuong@downpour.io',
                 password: 'K9n6sgmv',
             },
             loginApiCancel.signal,
@@ -24,9 +24,16 @@ const TestPlayground = () => {
         console.log($$.cookie.getAccessToken());
     };
 
+    const testAuth = () => {
+        api.get({ url: '/auth/testapi', params: {} }).then((e) => {
+            console.log(e);
+        });
+    };
+
     return (
         <>
             <button onClick={handleCancelApi}>cancel api</button>
+            <button onClick={testAuth}>TestAuth</button>
 
             <Text size={TextSize.Small}>Are you good?</Text>
             <Text>Are you good?</Text>

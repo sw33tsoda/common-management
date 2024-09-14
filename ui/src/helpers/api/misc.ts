@@ -16,7 +16,7 @@ type TApiFetchHandlerReturnType<R> = Promise<R>;
 type TApiFetchHandler = <P, R>(parameter: IFetchHelperParameters<P>) => TApiFetchHandlerReturnType<R>;
 interface IApiHelperImplementationParams<P> {
     url: string;
-    params: P;
+    params?: P;
     signal?: AbortSignal;
 }
 type IApiHelperImplementation = <P, R>(params: IApiHelperImplementationParams<P>) => TApiFetchHandlerReturnType<R>;

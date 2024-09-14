@@ -46,5 +46,12 @@ namespace Server.Controllers
         {
             return await _userAuthenticationService.Register(registerParamsDto);
         }
+
+        [Authorize]
+        [HttpGet("testapi")]
+        public async Task<IActionResult> TestApi(RegisterParamsDto registerParamsDto)
+        {
+            return Ok(registerParamsDto);
+        }
     }
 }
